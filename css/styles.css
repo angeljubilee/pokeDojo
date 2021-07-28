@@ -140,7 +140,26 @@ input {
   }
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 700px) {
+  section {
+    padding: 50px 80px 20px 80px;
+    line-height: 1rem;
+  }
+
+  input {
+    width: 40vh;
+  }
+
+  .search-field {
+    justify-content: space-between;
+  }
+
+  .column-fourth {
+    width: 25%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
   section {
     padding: 50px 80px 20px 80px;
     line-height: 1rem;
