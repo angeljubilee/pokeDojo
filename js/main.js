@@ -1,4 +1,5 @@
 var pokemonCardSets = null;
+var cardSetNames = [];
 var numPerPage = 16;
 var pageNum = 0;
 var $cardLogos = document.querySelector('.card-logos');
@@ -22,7 +23,14 @@ function handleSearch(event) {
   if (event.keyCode !== 13) {
     return;
   }
-  getPokemonCardsByPokemon($search.value);
+
+  var setID = cardSetNames.indexOf($search.value.toLowerCase());
+  if (setID > -1) {
+    getPokemonCards(setID);
+  } else {
+    getPokemonCardsByPokemon($search.value);
+  }
+  $search.value = '';
 }
 
 function handleNextPageClick(event) {
@@ -39,6 +47,9 @@ function getPokemonCardSets() {
   xhr.addEventListener('load', function () {
     pokemonCardSets = xhr.response.data;
     createLogosDOM(numPerPage * pageNum, numPerPage);
+    pokemonCardSets.forEach(set => {
+      cardSetNames.push(set.name.toLowerCase());
+    });
   });
   xhr.send();
 }

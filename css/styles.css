@@ -23,11 +23,23 @@ main {
   width: 100vw;
 }
 
+section {
+  padding: 30px 30px 10px 30px;
+  line-height: 1rem;
+}
+
 h1 {
   font-family: 'Fredoka One', cursive;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 2px;
+  margin: 0 0 0.7rem 0;
+}
+
+section h5,
+section p {
+  margin: 0;
+  letter-spacing: 0.7px;
 }
 
 a {
@@ -52,26 +64,46 @@ li img {
 
 input {
   height: 2rem;
-  width: 70vh;
+  width: 100vh;
   border-radius: 4px;
 }
 
-section {
-  padding: 30px 50px 10px 50px;
-  line-height: 0.5rem;
+.container {
+  margin-left: 20vw;
+  margin-right: 20vw;
+  padding-bottom: 10vh;
+  text-align: right;
+}
+
+.search-field {
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.my-deck {
+  margin-top: 0.5rem;
+}
+
+.card-count {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  color: black;
+  margin-left: 0.5rem;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-}
-
-.column-full {
-  flex-basis: 100%;
-}
-
-.column-fourth {
-  flex-basis: 25%;
 }
 
 .space-between {
@@ -84,27 +116,45 @@ section {
   justify-content: center;
 }
 
-.container {
-  margin-left: 20vw;
-  margin-right: 20vw;
-  padding-bottom: 10vh;
-  text-align: right;
+.flex-end {
+  justify-content: flex-end;
 }
 
-.card-count {
-  background-color: white;
-  border-radius: 50%;
-  height: 2rem;
-  width: 2rem;
-  color: black;
-  margin-left: 1rem;
-  text-align: center;
+.align-center {
+  align-content: center;
 }
 
-.card-count h5 {
-  margin-top: 0.8rem;
+.column-full,
+.column-fourth {
+  width: 100%;
 }
 
-.hidden {
-  display: none !important;
+@media screen and (min-width: 576px) {
+  section {
+    padding: 30px 40px 10px 40px;
+    line-height: 1rem;
+  }
+
+  .column-fourth {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  section {
+    padding: 50px 80px 20px 80px;
+    line-height: 1rem;
+  }
+
+  input {
+    width: 70vh;
+  }
+
+  .search-field {
+    justify-content: space-between;
+  }
+
+  .column-fourth {
+    width: 25%;
+  }
 }
