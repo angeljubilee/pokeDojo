@@ -1,0 +1,179 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+header {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url('../images/snorlax.png');
+  background-size: cover;
+  width: 100vw;
+  color: white;
+}
+
+main {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    );
+  width: 100vw;
+}
+
+section {
+  padding: 30px 30px 10px 30px;
+  line-height: 1rem;
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin: 0 0 0.7rem 0;
+}
+
+section h5,
+section p {
+  margin: 0;
+  letter-spacing: 0.7px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 40px 0 40px 0;
+}
+
+li {
+  list-style-type: none;
+  padding: 20px;
+  margin: 0;
+}
+
+li img {
+  width: 100%;
+}
+
+input {
+  height: 2rem;
+  width: 100vh;
+  border-radius: 4px;
+}
+
+.container {
+  margin-left: 20vw;
+  margin-right: 20vw;
+  padding-bottom: 10vh;
+  text-align: right;
+}
+
+.search-field {
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.my-deck {
+  margin-top: 0.5rem;
+}
+
+.card-count {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  color: black;
+  margin-left: 0.5rem;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flex-center {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.align-center {
+  align-content: center;
+}
+
+.column-full,
+.column-fourth {
+  width: 100%;
+}
+
+@media screen and (min-width: 576px) {
+  section {
+    padding: 30px 40px 10px 40px;
+    line-height: 1rem;
+  }
+
+  .column-fourth {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  section {
+    padding: 50px 80px 20px 80px;
+    line-height: 1rem;
+  }
+
+  input {
+    width: 40vh;
+  }
+
+  .search-field {
+    justify-content: space-between;
+  }
+
+  .column-fourth {
+    width: 25%;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  section {
+    padding: 50px 80px 20px 80px;
+    line-height: 1rem;
+  }
+
+  input {
+    width: 70vh;
+  }
+
+  .search-field {
+    justify-content: space-between;
+  }
+
+  .column-fourth {
+    width: 25%;
+  }
+}
