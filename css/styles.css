@@ -1,0 +1,110 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+header {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url('../images/snorlax.png');
+  background-size: cover;
+  width: 100vw;
+  color: white;
+}
+
+main {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    );
+  width: 100vw;
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 40px 0 40px 0;
+}
+
+li {
+  list-style-type: none;
+  padding: 20px;
+  margin: 0;
+}
+
+li img {
+  width: 100%;
+}
+
+input {
+  height: 2rem;
+  width: 70vh;
+  border-radius: 4px;
+}
+
+section {
+  padding: 30px 50px 10px 50px;
+  line-height: 0.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column-full {
+  flex-basis: 100%;
+}
+
+.column-fourth {
+  flex-basis: 25%;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.flex-center {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.container {
+  margin-left: 20vw;
+  margin-right: 20vw;
+  padding-bottom: 10vh;
+  text-align: right;
+}
+
+.card-count {
+  background-color: white;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  color: black;
+  margin-left: 1rem;
+  text-align: center;
+}
+
+.card-count h5 {
+  margin-top: 0.8rem;
+}
+
+.hidden {
+  display: none !important;
+}
