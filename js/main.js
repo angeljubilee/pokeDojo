@@ -1,5 +1,5 @@
-/* global data, showView */
-/* exported $views */
+/* global data, showView, setCardCount */
+/* exported $views, $cardCount */
 
 var pokemonCardSets = {
   sets: [],
@@ -25,7 +25,7 @@ var $cardsUL = document.querySelector('.cards');
 var $logo = document.querySelector('.series-logo');
 var $main = document.querySelector('.main-header');
 var $views = document.querySelectorAll('.view');
-var $cardCount = document.querySelector('.card-count');
+var $cardCount = document.querySelectorAll('.card-count');
 
 window.addEventListener('DOMContentLoaded', loadData);
 $logosUL.addEventListener('click', handleLogoClick);
@@ -36,7 +36,7 @@ $addButton.addEventListener('click', handleAddClick);
 $backLink.addEventListener('click', handleBackClick);
 
 function loadData(event) {
-  $cardCount.textContent = data.myDeck.length;
+  setCardCount();
   getPokemonCardSets();
 }
 
@@ -95,7 +95,7 @@ function handleCardClick(event) {
 function handleAddClick(event) {
   var cardIndex = $pokemonCard.getAttribute('data-view');
   data.myDeck.push(pokemonCards.cards[cardIndex]);
-  $cardCount.textContent = data.myDeck.length;
+  setCardCount();
   showView('cards');
 }
 
@@ -177,7 +177,7 @@ function createCardsDOM(start, end) {
   data.view = 'cards';
   $main.className += ' hidden';
   $search.className += ' hidden';
-  $logo.setAttribute('src', seriesLogo);
+  $logo.children[0].setAttribute('src', seriesLogo);
   $logo.className = 'series-logo';
   showView('cards');
 }

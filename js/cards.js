@@ -1,5 +1,5 @@
-/* global $views, $nextPage */
-/* exported showView */
+/* global data, $views, $nextPage, $cardCount */
+/* exported showView, setCardCount */
 
 function showView(viewMode) {
   $views.forEach(view => {
@@ -14,4 +14,10 @@ function showView(viewMode) {
   } else {
     $nextPage.className += 'next-link';
   }
+}
+
+function setCardCount() {
+  $cardCount.forEach(element => {
+    element.textContent = data.myDeck.length;
+  });
 }
