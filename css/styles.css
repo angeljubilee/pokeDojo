@@ -98,10 +98,9 @@ input {
 }
 
 .series-logo {
-  max-height: 14rem;
-  width: auto;
   display: block;
-  margin: 1rem auto;
+  width: 60%;
+  margin: 2rem auto;
 }
 
 .row {
