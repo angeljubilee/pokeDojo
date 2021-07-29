@@ -14,7 +14,7 @@
 </head>
 <body>
   <header>
-    <section>
+    <section class="main-header">
       <h1>Pok&eacute;Dojo</h1>
       <h5>Be The Very Best Cause No One Ever Was!</h5>
       <div class="search-field">
@@ -25,16 +25,32 @@
         </div>
       </div>
     </section>
+    <div class="row flex-center">
+      <div class="column-half">
+        <img class="series-logo hidden">
+      </div>
+    </div>
   </header>
   <main>
     <div class="container">
-      <ul class="row flex-center card-logos">
-      </ul>
+      <div class="view" data-view="logos">
+        <ul class="logos row flex-center">
+        </ul>
+      </div>
+      <div class="view hidden" data-view="cards">
+        <ul class="cards row flex-center">
+        </ul>
+      </div>
+      <div class="view hidden" data-view="myDeck">
+        <ul class="myDeck row flex-center">
+        </ul>
+      </div>
       <a href="#">Next Page</a>
     </div>
 
   </main>
   <script src="js/data.js"></script>
+  <script src="js/cards.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

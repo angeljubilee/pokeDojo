@@ -1,13 +1,20 @@
-var pokemonCardSets = null;
+/* global pokemonCards, $cardsUL, createCardsDOM */
+/* exported seriesLogo */
+
+var pokemonCardSets = {
+  sets: [],
+  pageNum: 0,
+  numPerPage: 16
+};
+
+var seriesLogo = '';
 var cardSetNames = [];
-var numPerPage = 16;
-var pageNum = 0;
-var $cardLogos = document.querySelector('.card-logos');
+var $logosUL = document.querySelector('.logos');
 var $search = document.querySelector('input');
 var $nextPage = document.querySelector('a');
 
 window.addEventListener('DOMContentLoaded', getPokemonCardSets);
-$cardLogos.addEventListener('click', handleLogoClick);
+$logosUL.addEventListener('click', handleLogoClick);
 $search.addEventListener('keypress', handleSearch);
 $nextPage.addEventListener('click', handleNextPageClick);
 
@@ -16,7 +23,8 @@ function handleLogoClick(event) {
     return;
   }
   var setIndex = event.target.closest('li').getAttribute('set-id');
-  getPokemonCards(pokemonCardSets[setIndex].id);
+  getPokemonCards(pokemonCardSets.sets[setIndex].id);
+  seriesLogo = pokemonCardSets.sets[setIndex].images.logo;
 }
 
 function handleSearch(event) {
@@ -27,6 +35,7 @@ function handleSearch(event) {
   var setID = cardSetNames.indexOf($search.value.toLowerCase());
   if (setID > -1) {
     getPokemonCards(setID);
+    seriesLogo = pokemonCardSets.sets[setID].images.logo;
   } else {
     getPokemonCardsByPokemon($search.value);
   }
@@ -34,9 +43,20 @@ function handleSearch(event) {
 }
 
 function handleNextPageClick(event) {
-  hideLogos(pageNum * numPerPage, pageNum * numPerPage + numPerPage);
-  pageNum++;
-  createLogosDOM(pageNum * numPerPage, pageNum * numPerPage + numPerPage);
+  var start = 0;
+  if (data.view === 'logos') {
+    start = pokemonCardSets.pageNum * pokemonCardSets.numPerPage;
+    hidePage($logosUL.children, start, start + pokemonCardSets.numPerPage);
+    pokemonCardSets.pageNum++;
+    createLogosDOM(start, start + pokemonCardSets.numPerPage);
+    return;
+  }
+  if (data.view === 'cards') {
+    start = pokemonCards.pageNum * pokemonCards.numPerPage;
+    hidePage($cardsUL.children, start, start + pokemonCards.numPerPage);
+    pokemonCards.pageNum++;
+    createCardsDOM(start, start + pokemonCards.numPerPage);
+  }
 }
 
 function getPokemonCardSets() {
@@ -45,9 +65,10 @@ function getPokemonCardSets() {
   xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    pokemonCardSets = xhr.response.data;
-    createLogosDOM(numPerPage * pageNum, numPerPage);
-    pokemonCardSets.forEach(set => {
+    pokemonCardSets.sets = xhr.response.data;
+    var start = pokemonCardSets.numPerPage * pokemonCardSets.pageNum;
+    createLogosDOM(start, start + pokemonCardSets.numPerPage);
+    pokemonCardSets.sets.forEach(set => {
       cardSetNames.push(set.name.toLowerCase());
     });
   });
@@ -60,7 +81,9 @@ function getPokemonCards(series) {
   xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-
+    pokemonCards.cards = xhr.response.data;
+    var start = pokemonCards.pageNum * pokemonCards.numPerPage;
+    createCardsDOM(start, start + pokemonCards.numPerPage);
   });
   xhr.send();
 }
@@ -71,6 +94,9 @@ function getPokemonCardsByPokemon(name) {
   xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
+    pokemonCards.cards = xhr.response.data;
+    var start = pokemonCards.pageNum * pokemonCards.numPerPage;
+    createCardsDOM(start, start + pokemonCards.numPerPage);
   });
   xhr.send();
 }
@@ -84,18 +110,17 @@ function createLogosDOM(start, end) {
     $li.className = 'column-fourth';
     $li.setAttribute('set-id', i);
     var $img = document.createElement('img');
-
-    $img.setAttribute('src', pokemonCardSets[i].images.logo);
+    $img.setAttribute('src', pokemonCardSets.sets[i].images.logo);
     $li.appendChild($img);
-    $cardLogos.appendChild($li);
+    $logosUL.appendChild($li);
   }
 }
 
-function hideLogos(start, end) {
+function hidePage(elementArray, start, end) {
   for (var i = start; i < end; i++) {
-    if (i >= $cardLogos.children.length) {
+    if (i >= elementArray.length) {
       return;
     }
-    $cardLogos.children[i].className = 'hidden';
+    elementArray[i].className = 'hidden';
   }
 }
