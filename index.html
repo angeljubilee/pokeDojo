@@ -26,8 +26,12 @@
       </div>
     </section>
     <div class="row flex-center">
-      <div class="column-half">
-        <img class="series-logo hidden">
+      <div class="series-logo hidden column-half">
+        <img src="#">
+        <div class="my-deck row align-center flex-end">
+          <h5>My Deck</h5>
+          <button class="card-count text-center">LO</button>
+        </div>
       </div>
     </div>
   </header>
@@ -45,9 +49,23 @@
         <ul class="myDeck row flex-center">
         </ul>
       </div>
-      <a href="#">Next Page</a>
+      <a class="next-link" href="#">Next Page</a>
+      <div class="view hidden" data-view="add">
+        <div class="row flex-center">
+          <div class="column-half">
+            <img class="pokemon-card" src="./images/SM05_hires.png">
+          </div>
+        </div>
+        <div class="row flex-center align-center margin-top-1">
+          <div class="column-half">
+            <div class="row align-center space-between">
+              <a class="back-link" href="#">Back</a>
+              <button class="add-button">Add Card</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </main>
   <script src="js/data.js"></script>
   <script src="js/cards.js"></script>

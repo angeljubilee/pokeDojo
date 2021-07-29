@@ -2,10 +2,7 @@
 
 var data = {
   view: 'logos',
-  sets: [],
-  cards: [],
-  myDeck: [],
-  nextEntryId: 1
+  myDeck: []
 };
 
 var prevData = localStorage.getItem('javascript-local-storage');
