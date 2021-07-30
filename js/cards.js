@@ -9,10 +9,15 @@ function showView(viewMode) {
       view.className = 'view hidden';
     }
   });
-  if (viewMode === 'add' || viewMode === 'myCard') {
-    $nextPage.className += ' hidden';
-  } else {
-    $nextPage.className = 'next-link';
+
+  switch (viewMode) {
+    case 'add':
+    case 'myCard':
+    case 'pokemon':
+      $nextPage.className += ' hidden';
+      break;
+    default:
+      $nextPage.className = 'next-link';
   }
 }
 

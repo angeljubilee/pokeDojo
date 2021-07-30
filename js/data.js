@@ -4,6 +4,7 @@ var data = {
   view: 'logos',
   myDeck: [],
   pageNum: 0,
+  currPageNum: 0,
   numPerPage: 8
 };
 
