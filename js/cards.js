@@ -12,7 +12,7 @@ function showView(viewMode) {
   if (viewMode === 'add') {
     $nextPage.className += ' hidden';
   } else {
-    $nextPage.className += 'next-link';
+    $nextPage.className = 'next-link';
   }
 }
 
