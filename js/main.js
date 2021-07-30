@@ -36,6 +36,7 @@ var $myCard = document.querySelector('.my-card');
 var $pokemonTitle = document.querySelector('.pokemon-title');
 var $pokemon = document.querySelector('.pokemon');
 var $pokemonBackButton = document.querySelector('.pokemon-back');
+var $removeCard = document.querySelector('.remove-card');
 
 window.addEventListener('DOMContentLoaded', loadData);
 $logosUL.addEventListener('click', handleLogoClick);
@@ -49,6 +50,7 @@ $myDeckLink[1].addEventListener('click', handleMyDeckClick);
 $myDeck.addEventListener('click', handleMyDeckCardClick);
 $pokemonTitle.addEventListener('click', handlePokemonClick);
 $pokemonBackButton.addEventListener('click', handlePokemonBack);
+$removeCard.addEventListener('click', handleRemove);
 
 function loadData(event) {
   setCardCount();
@@ -159,6 +161,14 @@ function handlePokemonClick(event) {
 
 function handlePokemonBack(event) {
   showView('myCard');
+}
+
+function handleRemove(event) {
+  var $myCard = event.target.closest('.my-card');
+  var cardIndex = $myCard.getAttribute('data-view');
+  $myDeck.children[cardIndex].remove();
+  data.myDeck.splice(cardIndex, 1);
+  showView('myDeck');
 }
 
 function getPokemonCardSets() {
