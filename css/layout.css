@@ -1,0 +1,33 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column-full,
+.column-half,
+.column-fourth,
+.column-fifth {
+  width: 100%;
+}
+
+@media screen and (min-width: 576px) {
+  .column-half,
+  .column-fourth,
+  .column-fifth {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .column-fourth {
+    width: 25%;
+  }
+
+  .column-fifth {
+    width: 20%;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

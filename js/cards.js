@@ -9,7 +9,7 @@ function showView(viewMode) {
       view.className = 'view hidden';
     }
   });
-  if (viewMode === 'add') {
+  if (viewMode === 'add' || viewMode === 'myCard') {
     $nextPage.className += ' hidden';
   } else {
     $nextPage.className = 'next-link';

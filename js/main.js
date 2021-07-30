@@ -15,6 +15,7 @@ var pokemonCards = {
 
 var seriesLogo = '';
 var cardSetNames = [];
+// var pokemonData = {};
 
 var $logosUL = document.querySelector('.logos');
 var $search = document.querySelector('input');
@@ -29,6 +30,8 @@ var $views = document.querySelectorAll('.view');
 var $cardCount = document.querySelectorAll('.card-count');
 var $myDeckLink = document.querySelectorAll('.my-deck');
 var $myDeck = document.querySelector('.myDeck');
+var $myCard = document.querySelector('.my-card');
+var $pokemonTitle = document.querySelector('.pokemon-title');
 
 window.addEventListener('DOMContentLoaded', loadData);
 $logosUL.addEventListener('click', handleLogoClick);
@@ -39,6 +42,8 @@ $addButton.addEventListener('click', handleAddClick);
 $backLink.addEventListener('click', handleBackClick);
 $myDeckLink[0].addEventListener('click', handleMyDeckClick);
 $myDeckLink[1].addEventListener('click', handleMyDeckClick);
+$myDeck.addEventListener('click', handleMyDeckCardClick);
+$pokemonTitle.addEventListener('click', handlePokemonClick);
 
 function loadData(event) {
   setCardCount();
@@ -123,6 +128,22 @@ function handleMyDeckClick(event) {
   showView('myDeck');
 }
 
+function handleMyDeckCardClick(event) {
+  if (!event.target.matches('img')) {
+    return;
+  }
+  var cardIndex = event.target.getAttribute('data-view');
+  var card = data.myDeck[cardIndex];
+  $myCard.getElementsByTagName('h4')[0].textContent = card.name;
+  $myCard.getElementsByTagName('img')[0].setAttribute('src', card.images.large);
+  $myCard.getElementsByTagName('a')[1].setAttribute('href', card.tcgplayer.url);
+  showView('myCard');
+}
+
+function handlePokemonClick(event) {
+  getPokemonData(event.target.textContent);
+}
+
 function getPokemonCardSets() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/sets?orderBy=-releaseDate');
@@ -161,6 +182,16 @@ function getPokemonCardsByPokemon(name) {
     pokemonCards.cards = xhr.response.data;
     var start = pokemonCards.pageNum * pokemonCards.numPerPage;
     createCardsDOM(start, start + pokemonCards.numPerPage);
+  });
+  xhr.send();
+}
+
+function getPokemonData(name) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://pokeapi.co/api/v2/pokemon/' + name);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    //    pokemonData = xhr.response;
   });
   xhr.send();
 }
@@ -208,9 +239,9 @@ function createMyDeckDOM(start, end) {
     }
     var $li = document.createElement('li');
     $li.className = 'column-fourth text-left';
-    var $h4 = document.createElement('h4');
-    $h4.textContent = data.myDeck[i].name;
-    $li.appendChild($h4);
+    var $h6 = document.createElement('h5');
+    $h6.textContent = data.myDeck[i].name;
+    $li.appendChild($h6);
     var $img = document.createElement('img');
     $img.setAttribute('src', data.myDeck[i].images.small);
     $img.setAttribute('data-view', i);
