@@ -24,11 +24,6 @@ main {
   width: 100vw;
 }
 
-section {
-  padding: 30px 30px 10px 30px;
-  line-height: 1rem;
-}
-
 h1 {
   font-family: 'Fredoka One', cursive;
   font-size: 28px;
@@ -39,12 +34,6 @@ h1 {
 
 h4 {
   letter-spacing: 1px;
-}
-
-section h5,
-section p {
-  margin: 0;
-  letter-spacing: 0.7px;
 }
 
 a {
@@ -88,6 +77,15 @@ button {
   text-align: right;
 }
 
+.main-header {
+  padding: 30px 30px 0 30px;
+  line-height: 1rem;
+}
+
+.main-header > h5 {
+  margin: 0 0 1rem 0;
+}
+
 .search-field {
   padding-top: 1rem;
   display: flex;
@@ -122,11 +120,6 @@ button {
   padding-right: 2rem;
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .space-between {
   justify-content: space-between;
 }
@@ -152,28 +145,19 @@ button {
   margin-top: 1rem;
 }
 
-.column-full,
-.column-half,
-.column-fourth,
-.column-fifth {
-  width: 100%;
+.padding-top-3 {
+  padding-top: 3rem;
 }
 
 @media screen and (min-width: 576px) {
-  section {
+  main-header {
     padding: 30px 40px 10px 40px;
     line-height: 1rem;
-  }
-
-  .column-half,
-  .column-fourth,
-  .column-fifth {
-    width: 50%;
   }
 }
 
 @media screen and (min-width: 700px) {
-  section {
+  main-header {
     padding: 50px 80px 20px 80px;
     line-height: 1rem;
   }
@@ -185,18 +169,10 @@ button {
   .search-field {
     justify-content: space-between;
   }
-
-  .column-fourth {
-    width: 25%;
-  }
-
-  .column-fifth {
-    width: 20%;
-  }
 }
 
-@media screen and (min-width: 1000px) {
-  section {
+@media screen and (min-width: 1100px) {
+  main-header {
     padding: 50px 80px 20px 80px;
     line-height: 1rem;
   }
@@ -208,16 +184,4 @@ button {
   .search-field {
     justify-content: space-between;
   }
-
-  .column-fourth {
-    width: 25%;
-  }
-
-  .column-fifth {
-    width: 20%;
-  }
-}
-
-.hidden {
-  display: none !important;
 }

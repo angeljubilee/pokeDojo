@@ -4,17 +4,20 @@
 var pokemonCardSets = {
   sets: [],
   pageNum: 0,
+  currPageNum: 0,
   numPerPage: 16
 };
 
 var pokemonCards = {
   cards: [],
   pageNum: 0,
+  currPageNum: 0,
   numPerPage: 15
 };
 
 var seriesLogo = '';
 var cardSetNames = [];
+var pokemonData = {};
 
 var $logosUL = document.querySelector('.logos');
 var $search = document.querySelector('input');
@@ -29,6 +32,10 @@ var $views = document.querySelectorAll('.view');
 var $cardCount = document.querySelectorAll('.card-count');
 var $myDeckLink = document.querySelectorAll('.my-deck');
 var $myDeck = document.querySelector('.myDeck');
+var $myCard = document.querySelector('.my-card');
+var $pokemonTitle = document.querySelector('.pokemon-title');
+var $pokemon = document.querySelector('.pokemon');
+var $pokemonBackButton = document.querySelector('.pokemon-back');
 
 window.addEventListener('DOMContentLoaded', loadData);
 $logosUL.addEventListener('click', handleLogoClick);
@@ -39,6 +46,9 @@ $addButton.addEventListener('click', handleAddClick);
 $backLink.addEventListener('click', handleBackClick);
 $myDeckLink[0].addEventListener('click', handleMyDeckClick);
 $myDeckLink[1].addEventListener('click', handleMyDeckClick);
+$myDeck.addEventListener('click', handleMyDeckCardClick);
+$pokemonTitle.addEventListener('click', handlePokemonClick);
+$pokemonBackButton.addEventListener('click', handlePokemonBack);
 
 function loadData(event) {
   setCardCount();
@@ -118,9 +128,37 @@ function handleBackClick(event) {
 }
 
 function handleMyDeckClick(event) {
-  var start = data.pageNum * data.numPerPage;
-  createMyDeckDOM(start, start + data.numPerPage);
+  data.currPageNum = 0;
+  var start = data.currPageNum * data.numPerPage;
+  if (!data.pageNum || data.currPageNum < data.pageNum - 1) {
+    createMyDeckDOM(start, start + data.numPerPage);
+    data.pageNum++;
+  } else {
+    showPage($myDeck.children, start, start + data.numPerPage);
+  }
+
   showView('myDeck');
+}
+
+function handleMyDeckCardClick(event) {
+  if (!event.target.matches('img')) {
+    return;
+  }
+  var cardIndex = event.target.getAttribute('data-view');
+  var card = data.myDeck[cardIndex];
+  $myCard.getElementsByTagName('h4')[0].textContent = card.name;
+  $myCard.getElementsByTagName('img')[0].setAttribute('src', card.images.large);
+  $myCard.getElementsByTagName('a')[1].setAttribute('href', card.tcgplayer.url);
+  $myCard.setAttribute('data-view', cardIndex);
+  showView('myCard');
+}
+
+function handlePokemonClick(event) {
+  getPokemonData(event.target.textContent);
+}
+
+function handlePokemonBack(event) {
+  showView('myCard');
 }
 
 function getPokemonCardSets() {
@@ -161,6 +199,25 @@ function getPokemonCardsByPokemon(name) {
     pokemonCards.cards = xhr.response.data;
     var start = pokemonCards.pageNum * pokemonCards.numPerPage;
     createCardsDOM(start, start + pokemonCards.numPerPage);
+  });
+  xhr.send();
+}
+
+function getPokemonData(name) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://pokeapi.co/api/v2/pokemon/' + name.toLowerCase());
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    pokemonData = xhr.response;
+    $pokemon.getElementsByTagName('img')[0].setAttribute('src',
+      pokemonData.sprites.other['official-artwork'].front_default);
+    $pokemon.getElementsByTagName('h5')[0].textContent = '#' +
+      pokemonData.id + ' ' + pokemonData.name[0].toUpperCase() +
+      pokemonData.name.slice(1);
+    var cardIndex = $myCard.getAttribute('data-view');
+    $pokemon.getElementsByTagName('p')[0].textContent =
+      data.myDeck[cardIndex].flavorText;
+    showView('pokemon');
   });
   xhr.send();
 }
@@ -208,9 +265,9 @@ function createMyDeckDOM(start, end) {
     }
     var $li = document.createElement('li');
     $li.className = 'column-fourth text-left';
-    var $h4 = document.createElement('h4');
-    $h4.textContent = data.myDeck[i].name;
-    $li.appendChild($h4);
+    var $h6 = document.createElement('h5');
+    $h6.textContent = data.myDeck[i].name;
+    $li.appendChild($h6);
     var $img = document.createElement('img');
     $img.setAttribute('src', data.myDeck[i].images.small);
     $img.setAttribute('data-view', i);
@@ -219,7 +276,7 @@ function createMyDeckDOM(start, end) {
   }
 
   data.view = 'myDeck';
-  $main.className += 'main-header';
+  $main.className = 'main-header';
   $logo.className += ' hidden';
   showView('myDeck');
 }
@@ -230,5 +287,14 @@ function hidePage(elementArray, start, end) {
       return;
     }
     elementArray[i].className = 'hidden';
+  }
+}
+
+function showPage(elementArray, start, end) {
+  for (var i = start; i < end; i++) {
+    if (i >= elementArray.length) {
+      return;
+    }
+    elementArray[i].className = '';
   }
 }
