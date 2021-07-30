@@ -207,12 +207,12 @@ function createMyDeckDOM(start, end) {
       break;
     }
     var $li = document.createElement('li');
-    $li.className = 'column-half text-left';
+    $li.className = 'column-fourth text-left';
     var $h4 = document.createElement('h4');
     $h4.textContent = data.myDeck[i].name;
     $li.appendChild($h4);
     var $img = document.createElement('img');
-    $img.setAttribute('src', data.myDeck[i].images.large);
+    $img.setAttribute('src', data.myDeck[i].images.small);
     $img.setAttribute('data-view', i);
     $li.appendChild($img);
     $myDeck.appendChild($li);

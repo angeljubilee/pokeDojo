@@ -4,7 +4,7 @@ var data = {
   view: 'logos',
   myDeck: [],
   pageNum: 0,
-  numPerPage: 6
+  numPerPage: 8
 };
 
 var prevData = localStorage.getItem('javascript-local-storage');
