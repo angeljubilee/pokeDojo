@@ -15,6 +15,10 @@ header {
   color: white;
 }
 
+section {
+  padding: 8vh 10vw 2vh 10vw;
+}
+
 main {
   background:
     linear-gradient(
@@ -78,8 +82,11 @@ button {
 }
 
 .main-header {
-  padding: 30px 30px 0 30px;
   line-height: 1rem;
+}
+
+.main-header input {
+  width: 100vw;
 }
 
 .main-header > h5 {
@@ -104,11 +111,10 @@ button {
   text-align: center;
 }
 
-.series-logo {
+.series-logo img {
   display: block;
   width: 60%;
   margin: 0 auto;
-  padding-top: 3rem;
 }
 
 .pokemon-card {
@@ -149,21 +155,21 @@ button {
   padding-top: 3rem;
 }
 
-@media screen and (min-width: 576px) {
-  main-header {
-    padding: 30px 40px 10px 40px;
-    line-height: 1rem;
-  }
+.right {
+  float: right;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 @media screen and (min-width: 700px) {
   main-header {
-    padding: 50px 80px 20px 80px;
     line-height: 1rem;
   }
 
   input {
-    width: 40vh;
+    width: 50vh;
   }
 
   .search-field {
@@ -173,7 +179,6 @@ button {
 
 @media screen and (min-width: 1100px) {
   main-header {
-    padding: 50px 80px 20px 80px;
     line-height: 1rem;
   }
 

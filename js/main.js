@@ -30,7 +30,7 @@ var $logo = document.querySelector('.series-logo');
 var $main = document.querySelector('.main-header');
 var $views = document.querySelectorAll('.view');
 var $cardCount = document.querySelectorAll('.card-count');
-var $myDeckLink = document.querySelectorAll('.my-deck');
+var $myDeckLink = document.querySelector('.my-deck');
 var $myDeck = document.querySelector('.myDeck');
 var $myCard = document.querySelector('.my-card');
 var $pokemonTitle = document.querySelector('.pokemon-title');
@@ -45,8 +45,7 @@ $nextPage.addEventListener('click', handleNextPageClick);
 $cardsUL.addEventListener('click', handleCardClick);
 $addButton.addEventListener('click', handleAddClick);
 $backLink.addEventListener('click', handleBackClick);
-$myDeckLink[0].addEventListener('click', handleMyDeckClick);
-$myDeckLink[1].addEventListener('click', handleMyDeckClick);
+$myDeckLink.addEventListener('click', handleMyDeckClick);
 $myDeck.addEventListener('click', handleMyDeckCardClick);
 $pokemonTitle.addEventListener('click', handlePokemonClick);
 $pokemonBackButton.addEventListener('click', handlePokemonBack);
@@ -263,7 +262,7 @@ function createCardsDOM(start, end) {
 
   data.view = 'cards';
   $main.className += ' hidden';
-  $logo.children[0].setAttribute('src', seriesLogo);
+  $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
   $logo.className = 'series-logo';
   showView('cards');
 }
