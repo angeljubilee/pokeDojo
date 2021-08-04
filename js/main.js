@@ -1,4 +1,4 @@
-/* global data, showView, setCardCount */
+/* global data, showView, setCardCount, hidePage, showPage */
 /* exported $views, $cardCount */
 
 var pokemonCardSets = {
@@ -96,6 +96,7 @@ function handleNextPageClick(event) {
     pokemonCards.pageNum++;
     start = pokemonCards.pageNum * pokemonCards.numPerPage;
     createCardsDOM(start, start + pokemonCards.numPerPage);
+    return;
   }
   if (data.view === 'myDeck') {
     start = data.pageNum * data.numPerPage;
@@ -233,7 +234,7 @@ function getPokemonData(name) {
 
 function createLogosDOM(start, end) {
   for (var i = start; i < end; i++) {
-    if (i >= pokemonCardSets.length) {
+    if (i >= pokemonCardSets.sets.length) {
       return;
     }
     var $li = document.createElement('li');
@@ -243,6 +244,7 @@ function createLogosDOM(start, end) {
     $img.setAttribute('src', pokemonCardSets.sets[i].images.logo);
     $li.appendChild($img);
     $logosUL.appendChild($li);
+    data.view = 'logos';
   }
 }
 
@@ -288,22 +290,4 @@ function createMyDeckDOM(start, end) {
   $main.className = 'main-header';
   $logo.className += ' hidden';
   showView('myDeck');
-}
-
-function hidePage(elementArray, start, end) {
-  for (var i = start; i < end; i++) {
-    if (i >= elementArray.length) {
-      return;
-    }
-    elementArray[i].className = 'hidden';
-  }
-}
-
-function showPage(elementArray, start, end) {
-  for (var i = start; i < end; i++) {
-    if (i >= elementArray.length) {
-      return;
-    }
-    elementArray[i].className = '';
-  }
 }
