@@ -39,6 +39,7 @@ var $pokemonBackButton = document.querySelector('.pokemon-back');
 var $removeCard = document.querySelector('.remove-card');
 
 window.addEventListener('DOMContentLoaded', loadData);
+$logo.addEventListener('click', handleHeaderLogoClick);
 $logosUL.addEventListener('click', handleLogoClick);
 $search.addEventListener('keypress', handleSearch);
 $nextPage.addEventListener('click', handleNextPageClick);
@@ -54,6 +55,12 @@ $removeCard.addEventListener('click', handleRemove);
 function loadData(event) {
   setCardCount();
   getPokemonCardSets();
+}
+
+function handleHeaderLogoClick(event) {
+  showView('logos');
+  $logo.className += ' hidden';
+  $main.className = 'main-header row';
 }
 
 function handleLogoClick(event) {

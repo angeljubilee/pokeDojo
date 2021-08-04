@@ -2,6 +2,7 @@
 /* exported showView, setCardCount, hidePage, showPage */
 
 function showView(viewMode) {
+  data.view = viewMode;
   $views.forEach(view => {
     if (view.getAttribute('data-view') === viewMode) {
       view.className = 'view';
