@@ -202,8 +202,12 @@ function getPokemonCards(series) {
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
     pokemonCards.pageNum = 0;
-    clearCardsDOM();
     createCardsDOM(0, pokemonCards.numPerPage);
+    data.view = 'cards';
+    $main.className += ' hidden';
+    $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
+    $logo.className = 'series-logo';
+    showView('cards');
   });
   xhr.send();
 }
@@ -217,6 +221,8 @@ function getPokemonCardsByPokemon(name) {
     pokemonCards.cards = xhr.response.data;
     var start = pokemonCards.pageNum * pokemonCards.numPerPage;
     createCardsDOM(start, start + pokemonCards.numPerPage);
+    data.view = 'cards';
+    showView('cards');
   });
   xhr.send();
 }
@@ -257,6 +263,14 @@ function createLogosDOM(start, end) {
 }
 
 function createCardsDOM(start, end) {
+  var $ul;
+  if (start === 0 && $cardsUL.children.length > 0) {
+    $ul = document.createElement('ul');
+    $ul.className = 'cards row flex-center';
+  } else {
+    $ul = $cardsUL;
+  }
+
   for (var i = start; i < end; i++) {
     if (i >= pokemonCards.cards.length) {
       break;
@@ -267,23 +281,17 @@ function createCardsDOM(start, end) {
     $img.setAttribute('src', pokemonCards.cards[i].images.small);
     $img.setAttribute('data-view', i);
     $li.appendChild($img);
-    $cardsUL.appendChild($li);
+    $ul.appendChild($li);
   }
-
-  data.view = 'cards';
-  $main.className += ' hidden';
-  $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
-  $logo.className = 'series-logo';
-  showView('cards');
-}
-
-function clearCardsDOM() {
-  if (!$cardsUL.children.length) {
-    return;
-  }
-
-  for (var i = 0; i < $cardsUL.children.length; i++) {
-    $cardsUL.children[i].remove();
+  if (start === 0 && $cardsUL.children.length > 0) {
+    var $cardsView;
+    for (var j = 0; j < $views.length; j++) {
+      if ($views[j].getAttribute('data-view') === 'cards') {
+        $cardsView = $views[j];
+      }
+    }
+    $cardsView.replaceChild($ul, $cardsUL);
+    $cardsUL = $ul;
   }
 }
 
