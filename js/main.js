@@ -188,7 +188,7 @@ function getPokemonCardSets() {
     var start = pokemonCardSets.numPerPage * pokemonCardSets.pageNum;
     createLogosDOM(start, start + pokemonCardSets.numPerPage);
     pokemonCardSets.sets.forEach(set => {
-      cardSetNames.push(set.name.toLowerCase());
+      cardSetNames.push(set.name);
     });
   });
   xhr.send();
@@ -201,8 +201,9 @@ function getPokemonCards(series) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
-    var start = pokemonCards.pageNum * pokemonCards.numPerPage;
-    createCardsDOM(start, start + pokemonCards.numPerPage);
+    pokemonCards.pageNum = 0;
+    clearCardsDOM();
+    createCardsDOM(0, pokemonCards.numPerPage);
   });
   xhr.send();
 }
@@ -274,6 +275,16 @@ function createCardsDOM(start, end) {
   $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
   $logo.className = 'series-logo';
   showView('cards');
+}
+
+function clearCardsDOM() {
+  if (!$cardsUL.children.length) {
+    return;
+  }
+
+  for (var i = 0; i < $cardsUL.children.length; i++) {
+    $cardsUL.children[i].remove();
+  }
 }
 
 function createMyDeckDOM(start, end) {
