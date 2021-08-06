@@ -1,4 +1,4 @@
-/* global data, showView, setCardCount, hidePage, showPage */
+/* global data, showView, setCardCount, showPage */
 /* exported $views, $cardCount */
 
 var pokemonCardSets = {
@@ -21,7 +21,7 @@ var pokemonData = {};
 
 var $logosUL = document.querySelector('.logos');
 var $search = document.querySelector('input');
-var $nextPage = document.querySelector('.next-link');
+// var $nextPage = document.querySelector('.next-link');
 var $pokemonCard = document.querySelector('.pokemon-card');
 var $addButton = document.querySelector('.add-button');
 var $backLink = document.querySelector('.back-link');
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', loadData);
 $logo.addEventListener('click', handleHeaderLogoClick);
 $logosUL.addEventListener('click', handleLogoClick);
 $search.addEventListener('keypress', handleSearch);
-$nextPage.addEventListener('click', handleNextPageClick);
+// $nextPage.addEventListener('click', handleNextPageClick);
 $cardsUL.addEventListener('click', handleCardClick);
 $addButton.addEventListener('click', handleAddClick);
 $backLink.addEventListener('click', handleBackClick);
@@ -87,32 +87,32 @@ function handleSearch(event) {
   $search.value = '';
 }
 
-function handleNextPageClick(event) {
-  var start = 0;
-  if (data.view === 'logos') {
-    start = pokemonCardSets.pageNum * pokemonCardSets.numPerPage;
-    hidePage($logosUL.children, start, start + pokemonCardSets.numPerPage);
-    pokemonCardSets.pageNum++;
-    start = pokemonCardSets.pageNum * pokemonCardSets.numPerPage;
-    createLogosDOM(start, start + pokemonCardSets.numPerPage);
-    return;
-  }
-  if (data.view === 'cards') {
-    start = pokemonCards.pageNum * pokemonCards.numPerPage;
-    hidePage($cardsUL.children, start, start + pokemonCards.numPerPage);
-    pokemonCards.pageNum++;
-    start = pokemonCards.pageNum * pokemonCards.numPerPage;
-    createCardsDOM(start, start + pokemonCards.numPerPage);
-    return;
-  }
-  if (data.view === 'myDeck') {
-    start = data.pageNum * data.numPerPage;
-    hidePage($myDeck.children, start, start + data.numPerPage);
-    data.pageNum++;
-    start = data.pageNum * data.numPerPage;
-    createMyDeckDOM(start, start + data.pageNum);
-  }
-}
+// function handleNextPageClick(event) {
+//   var start = 0;
+//   if (data.view === 'logos') {
+//     start = pokemonCardSets.pageNum * pokemonCardSets.numPerPage;
+//     hidePage($logosUL.children, start, start + pokemonCardSets.numPerPage);
+//     pokemonCardSets.pageNum++;
+//     start = pokemonCardSets.pageNum * pokemonCardSets.numPerPage;
+//     createLogosDOM(start, start + pokemonCardSets.numPerPage);
+//     return;
+//   }
+//   if (data.view === 'cards') {
+//     start = pokemonCards.pageNum * pokemonCards.numPerPage;
+//     hidePage($cardsUL.children, start, start + pokemonCards.numPerPage);
+//     pokemonCards.pageNum++;
+//     start = pokemonCards.pageNum * pokemonCards.numPerPage;
+//     createCardsDOM(start, start + pokemonCards.numPerPage);
+//     return;
+//   }
+//   if (data.view === 'myDeck') {
+//     start = data.pageNum * data.numPerPage;
+//     hidePage($myDeck.children, start, start + data.numPerPage);
+//     data.pageNum++;
+//     start = data.pageNum * data.numPerPage;
+//     createMyDeckDOM(start, start + data.pageNum);
+//   }
+// }
 
 function handleCardClick(event) {
   if (!event.target.matches('img')) {

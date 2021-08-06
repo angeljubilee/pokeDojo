@@ -1,5 +1,5 @@
 /* global data, $views, $nextPage, $cardCount */
-/* exported showView, setCardCount, hidePage, showPage */
+/* exported showView, setCardCount, showPage */
 
 function showView(viewMode) {
   data.view = viewMode;
@@ -28,14 +28,14 @@ function setCardCount() {
   });
 }
 
-function hidePage(elementArray, start, end) {
-  for (var i = start; i < end; i++) {
-    if (i >= elementArray.length) {
-      return;
-    }
-    elementArray[i].className += ' hidden';
-  }
-}
+// function hidePage(elementArray, start, end) {
+//   for (var i = start; i < end; i++) {
+//     if (i >= elementArray.length) {
+//       return;
+//     }
+//     elementArray[i].className += ' hidden';
+//   }
+// }
 
 function showPage(elementArray, start, end) {
   for (var i = start; i < end; i++) {

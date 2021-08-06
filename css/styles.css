@@ -52,7 +52,7 @@ ul {
 
 li {
   list-style-type: none;
-  padding: 20px;
+  padding: 1.5rem;
   margin: 0;
 }
 
@@ -127,6 +127,10 @@ button {
   padding-right: 2rem;
 }
 
+.page-link li {
+  padding: 0.5rem;
+}
+
 .space-between {
   justify-content: space-between;
 }
@@ -158,10 +162,6 @@ button {
 
 .right {
   float: right;
-}
-
-.cursor {
-  cursor: pointer;
 }
 
 @media screen and (min-width: 700px) {
