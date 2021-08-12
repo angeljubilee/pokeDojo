@@ -1,5 +1,5 @@
 /* global data, $views, $nextPage, $cardCount */
-/* exported showView, setCardCount, showPage */
+/* exported showView, setCardCount, showPage, hidePage */
 
 function showView(viewMode) {
   data.view = viewMode;
@@ -23,27 +23,31 @@ function showView(viewMode) {
 }
 
 function setCardCount() {
-  $cardCount.forEach(element => {
-    element.textContent = data.myDeck.length;
-  });
+  $cardCount.textContent = data.myDeck.items.length;
 }
 
-// function hidePage(elementArray, start, end) {
-//   for (var i = start; i < end; i++) {
-//     if (i >= elementArray.length) {
-//       return;
-//     }
-//     elementArray[i].className += ' hidden';
-//   }
-// }
-
-function showPage(elementArray, start, end) {
+function hidePage(elementArray, start, end) {
   for (var i = start; i < end; i++) {
     if (i >= elementArray.length) {
       return;
     }
     var className = elementArray[i].className;
     var hiddenIndex = className.indexOf('hidden');
-    elementArray[i].className = className.slice(0, hiddenIndex - 1);
+    if (hiddenIndex === -1) {
+      elementArray[i].className += ' hidden';
+    }
+  }
+}
+
+function showPage(elementArray, start, end) {
+  for (var i = start; i < end; i++) {
+    if (i < 0 || i >= elementArray.length) {
+      return;
+    }
+    var className = elementArray[i].className;
+    var hiddenIndex = className.indexOf('hidden');
+    if (hiddenIndex !== -1) {
+      elementArray[i].className = className.slice(0, hiddenIndex - 1);
+    }
   }
 }
