@@ -2,10 +2,11 @@
 
 var data = {
   view: 'logos',
-  myDeck: [],
-  pageNum: 0,
-  currPageNum: 0,
-  numPerPage: 8
+  myDeck: {
+    items: [],
+    pageTotal: 0,
+    numPerPage: 8
+  }
 };
 
 var prevData = localStorage.getItem('javascript-local-storage');
@@ -16,7 +17,6 @@ if (prevData) {
 window.addEventListener('beforeunload', handleLocalStorage);
 
 function handleLocalStorage(event) {
-  data.pageNum = 0;
   var dataJSON = JSON.stringify(data);
   localStorage.setItem('javascript-local-storage', dataJSON);
 }
