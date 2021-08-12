@@ -1,46 +1,46 @@
 /* global data, showView, setCardCount, showPage, hidePage */
 /* exported $views, $cardCount */
 
-var pokemonCardSets = {
+const pokemonCardSets = {
   items: [],
   pageTotal: 0,
   numPerPage: 16
 };
 
-var pokemonCards = {
+const pokemonCards = {
   items: [],
   pageTotal: 0,
   numPerPage: 15
 };
 
-var currentPage = {
+const currentPage = {
   data: [],
   $UL: [],
   pageNum: 0
 };
 
-var seriesLogo = '';
-var cardSetNames = [];
-var pokemonData = {};
+let seriesLogo = '';
+const cardSetNames = [];
+let pokemonData = {};
 
-var $logosUL = document.querySelector('.logos');
-var $search = document.querySelector('input');
-var $pageLink = document.querySelector('.page-link');
-var $pokemonCard = document.querySelector('.pokemon-card');
-var $addButton = document.querySelector('.add-button');
-var $backLink = document.querySelector('.back-link');
-var $cardsUL = document.querySelector('.cards');
-var $logo = document.querySelector('.series-logo');
-var $main = document.querySelector('.main-header');
-var $views = document.querySelectorAll('.view');
-var $cardCount = document.querySelector('.card-count');
-var $myDeckLink = document.querySelector('.my-deck');
-var $myDeck = document.querySelector('.myDeck');
-var $myCard = document.querySelector('.my-card');
-var $pokemonTitle = document.querySelector('.pokemon-title');
-var $pokemon = document.querySelector('.pokemon');
-var $pokemonBackButton = document.querySelector('.pokemon-back');
-var $removeCard = document.querySelector('.remove-card');
+const $logosUL = document.querySelector('.logos');
+const $search = document.querySelector('input');
+const $pageLink = document.querySelector('.page-link');
+const $pokemonCard = document.querySelector('.pokemon-card');
+const $addButton = document.querySelector('.add-button');
+const $backLink = document.querySelector('.back-link');
+let $cardsUL = document.querySelector('.cards');
+const $logo = document.querySelector('.series-logo');
+const $main = document.querySelector('.main-header');
+let $views = document.querySelectorAll('.view');
+let $cardCount = document.querySelector('.card-count');
+const $myDeckLink = document.querySelector('.my-deck');
+const $myDeck = document.querySelector('.myDeck');
+const $myCard = document.querySelector('.my-card');
+const $pokemonTitle = document.querySelector('.pokemon-title');
+const $pokemon = document.querySelector('.pokemon');
+const $pokemonBackButton = document.querySelector('.pokemon-back');
+const $removeCard = document.querySelector('.remove-card');
 
 window.addEventListener('DOMContentLoaded', loadData);
 $logo.addEventListener('click', handleHeaderLogoClick);
@@ -71,9 +71,9 @@ function handleLogoClick(event) {
   if (!event.target.matches('img')) {
     return;
   }
-  var setIndex = event.target.closest('li').getAttribute('set-id');
-  getPokemonCards(pokemonCardSets.sets[setIndex].id);
-  seriesLogo = pokemonCardSets.sets[setIndex].images.logo;
+  const setIndex = event.target.closest('li').getAttribute('set-id');
+  getPokemonCards(pokemonCardSets.items[setIndex].id);
+  seriesLogo = pokemonCardSets.items[setIndex].images.logo;
 }
 
 function handleSearch(event) {
@@ -81,10 +81,10 @@ function handleSearch(event) {
     return;
   }
 
-  var setID = cardSetNames.indexOf($search.value.toLowerCase());
+  const setID = cardSetNames.indexOf($search.value.toLowerCase());
   if (setID > -1) {
     getPokemonCards(setID);
-    seriesLogo = pokemonCardSets.sets[setID].images.logo;
+    seriesLogo = pokemonCardSets.items[setID].images.logo;
   } else {
     getPokemonCardsByPokemon($search.value);
   }
@@ -92,8 +92,8 @@ function handleSearch(event) {
 }
 
 function handlePageClick(event) {
-  var link = event.target.textContent;
-  var nextPageNum = 0;
+  const link = event.target.textContent;
+  let nextPageNum = 0;
   switch (link) {
     case '< Back' :
       nextPageNum = currentPage.pageNum - 1;
@@ -105,7 +105,7 @@ function handlePageClick(event) {
       nextPageNum = parseInt(link) - 1;
   }
 
-  var start = currentPage.pageNum * currentPage.data.numPerPage;
+  let start = currentPage.pageNum * currentPage.data.numPerPage;
   hidePage(currentPage.$UL.children, start, start + currentPage.data.numPerPage);
 
   if (nextPageNum <= currentPage.data.pageTotal - 1) {
@@ -137,16 +137,16 @@ function handleCardClick(event) {
   if (!event.target.matches('img')) {
     return;
   }
-  var cardIndex = event.target.getAttribute('data-view');
-  var pokemonCard = pokemonCards.cards[cardIndex];
+  const cardIndex = event.target.getAttribute('data-view');
+  const pokemonCard = pokemonCards.cards[cardIndex];
   $pokemonCard.setAttribute('src', pokemonCard.images.large);
   $pokemonCard.setAttribute('data-view', cardIndex);
   showView('add');
 }
 
 function handleAddClick(event) {
-  var cardIndex = $pokemonCard.getAttribute('data-view');
-  data.myDeck.push(pokemonCards.cards[cardIndex]);
+  const cardIndex = $pokemonCard.getAttribute('data-view');
+  data.myDeck.items.push(pokemonCards.cards[cardIndex]);
   setCardCount();
   showView('cards');
 }
@@ -157,12 +157,11 @@ function handleBackClick(event) {
 
 function handleMyDeckClick(event) {
   currentPage.pageNum = 0;
-  var start = 0;
   if (!data.myDeck.pageTotal) {
-    createMyDeckDOM(start, currentPage + data.myDeck.numPerPage);
+    createMyDeckDOM(0, data.myDeck.numPerPage);
     data.myDeck.pageTotal++;
   } else {
-    showPage($myDeck.children, start, start + data.myDeck.numPerPage);
+    showPage($myDeck.children, 0, data.myDeck.numPerPage);
   }
 
   showView('myDeck');
@@ -172,8 +171,8 @@ function handleMyDeckCardClick(event) {
   if (!event.target.matches('img')) {
     return;
   }
-  var cardIndex = event.target.getAttribute('data-view');
-  var card = data.myDeck[cardIndex];
+  const cardIndex = event.target.getAttribute('data-view');
+  const card = data.myDeck.items[cardIndex];
   $myCard.getElementsByTagName('h4')[0].textContent = card.name;
   $myCard.getElementsByTagName('img')[0].setAttribute('src', card.images.large);
   $myCard.getElementsByTagName('a')[1].setAttribute('href', card.tcgplayer.url);
@@ -190,15 +189,15 @@ function handlePokemonBack(event) {
 }
 
 function handleRemove(event) {
-  var $myCard = event.target.closest('.my-card');
-  var cardIndex = $myCard.getAttribute('data-view');
+  const $myCard = event.target.closest('.my-card');
+  const cardIndex = $myCard.getAttribute('data-view');
   $myDeck.children[cardIndex].remove();
-  data.myDeck.splice(cardIndex, 1);
+  data.myDeck.items.splice(cardIndex, 1);
   showView('myDeck');
 }
 
 function getPokemonCardSets() {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/sets?orderBy=-releaseDate');
   xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
@@ -210,7 +209,7 @@ function getPokemonCardSets() {
     pokemonCardSets.items.forEach(set => {
       cardSetNames.push(set.name);
     });
-    var totalPages = Math.ceil(pokemonCardSets.items.length /
+    const totalPages = Math.ceil(pokemonCardSets.items.length /
       pokemonCardSets.numPerPage);
     displayPageLinks(totalPages);
   });
@@ -218,7 +217,7 @@ function getPokemonCardSets() {
 }
 
 function getPokemonCards(series) {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + series);
   xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
@@ -236,13 +235,13 @@ function getPokemonCards(series) {
 }
 
 function getPokemonCardsByPokemon(name) {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=name:' + name);
   xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
-    var start = pokemonCards.pageNum * pokemonCards.numPerPage;
+    const start = pokemonCards.pageNum * pokemonCards.numPerPage;
     createCardsDOM(start, start + pokemonCards.numPerPage);
     data.view = 'cards';
     showView('cards');
@@ -251,7 +250,7 @@ function getPokemonCardsByPokemon(name) {
 }
 
 function getPokemonData(name) {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://pokeapi.co/api/v2/pokemon/' + name.toLowerCase());
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
@@ -261,23 +260,23 @@ function getPokemonData(name) {
     $pokemon.getElementsByTagName('h5')[0].textContent = '#' +
       pokemonData.id + ' ' + pokemonData.name[0].toUpperCase() +
       pokemonData.name.slice(1);
-    var cardIndex = $myCard.getAttribute('data-view');
+    const cardIndex = $myCard.getAttribute('data-view');
     $pokemon.getElementsByTagName('p')[0].textContent =
-      data.myDeck[cardIndex].flavorText;
+      data.myDeck.items[cardIndex].flavorText;
     showView('pokemon');
   });
   xhr.send();
 }
 
 function createLogosDOM(start, end) {
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     if (i >= pokemonCardSets.items.length) {
       return;
     }
-    var $li = document.createElement('li');
+    const $li = document.createElement('li');
     $li.className = 'column-fourth';
     $li.setAttribute('set-id', i);
-    var $img = document.createElement('img');
+    const $img = document.createElement('img');
     $img.setAttribute('src', pokemonCardSets.items[i].images.logo);
     $li.appendChild($img);
     $logosUL.appendChild($li);
@@ -286,7 +285,7 @@ function createLogosDOM(start, end) {
 }
 
 function createCardsDOM(start, end) {
-  var $ul;
+  let $ul;
   if (start === 0 && $cardsUL.children.length > 0) {
     $ul = document.createElement('ul');
     $ul.className = 'cards row flex-center';
@@ -294,21 +293,21 @@ function createCardsDOM(start, end) {
     $ul = $cardsUL;
   }
 
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     if (i >= pokemonCards.cards.length) {
       break;
     }
-    var $li = document.createElement('li');
+    const $li = document.createElement('li');
     $li.className = 'column-fifth';
-    var $img = document.createElement('img');
+    const $img = document.createElement('img');
     $img.setAttribute('src', pokemonCards.cards[i].images.small);
     $img.setAttribute('data-view', i);
     $li.appendChild($img);
     $ul.appendChild($li);
   }
   if (start === 0 && $cardsUL.children.length > 0) {
-    var $cardsView;
-    for (var j = 0; j < $views.length; j++) {
+    let $cardsView;
+    for (let j = 0; j < $views.length; j++) {
       if ($views[j].getAttribute('data-view') === 'cards') {
         $cardsView = $views[j];
       }
@@ -319,17 +318,17 @@ function createCardsDOM(start, end) {
 }
 
 function createMyDeckDOM(start, end) {
-  for (var i = start; i < end; i++) {
-    if (i >= data.myDeck.length) {
+  for (let i = start; i < end; i++) {
+    if (i >= data.myDeck.items.length) {
       break;
     }
-    var $li = document.createElement('li');
+    const $li = document.createElement('li');
     $li.className = 'column-fourth text-left';
-    var $h6 = document.createElement('h5');
-    $h6.textContent = data.myDeck[i].name;
+    const $h6 = document.createElement('h5');
+    $h6.textContent = data.myDeck.items[i].name;
     $li.appendChild($h6);
-    var $img = document.createElement('img');
-    $img.setAttribute('src', data.myDeck[i].images.small);
+    const $img = document.createElement('img');
+    $img.setAttribute('src', data.myDeck.items[i].images.small);
     $img.setAttribute('data-view', i);
     $li.appendChild($img);
     $myDeck.appendChild($li);
@@ -343,7 +342,7 @@ function createMyDeckDOM(start, end) {
 
 function displayPageLinks(totalPages) {
   if (totalPages < 4) {
-    for (var i = totalPages + 1; i < 4; i++) {
+    for (let i = totalPages + 1; i < 4; i++) {
       $pageLink.children[i].className = 'hidden';
     }
     $pageLink.children[4].className = 'hidden';
@@ -351,7 +350,7 @@ function displayPageLinks(totalPages) {
 }
 
 function updatePageLink(currentPage) {
-  var totalPages = Math.ceil(currentPage.data.items.length /
+  const totalPages = Math.ceil(currentPage.data.items.length /
   currentPage.data.numPerPage);
   if (currentPage.pageNum === 0) {
     $pageLink.children[0].classList = 'hidden';
@@ -379,8 +378,8 @@ function updatePageLink(currentPage) {
     return;
   }
 
-  var link1 = parseInt($pageLink.children[1].textContent);
-  var link3 = parseInt($pageLink.children[3].textContent);
+  const link1 = parseInt($pageLink.children[1].textContent);
+  const link3 = parseInt($pageLink.children[3].textContent);
 
   if (currentPage.pageNum >= (link3 - 1) ||
   currentPage.pageNum <= (link1 - 1)) {
