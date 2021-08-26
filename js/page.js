@@ -15,10 +15,11 @@ function showView(viewMode) {
     case 'add':
     case 'myCard':
     case 'pokemon':
-      $pageLink.children[4].className = 'hidden';
+    case 'empty':
+      $pageLink.className += ' hidden';
       break;
     default:
-      $pageLink.children[4].className = '';
+      $pageLink.className = 'page-link row flex-end align-center';
   }
 }
 

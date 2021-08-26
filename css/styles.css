@@ -30,10 +30,10 @@ main {
 
 h1 {
   font-family: 'Fredoka One', cursive;
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 400;
   letter-spacing: 2px;
-  margin: 0 0 0.7rem 0;
+  margin: 0 0 1rem 0;
 }
 
 h4 {
@@ -45,9 +45,13 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: #94c7e9;
+}
+
 ul {
   margin: 0;
-  padding: 40px 0 40px 0;
+  padding: 40px 20px;
 }
 
 li {
@@ -59,6 +63,10 @@ li {
 img {
   width: 100%;
   cursor: pointer;
+}
+
+img:hover {
+  filter: drop-shadow(0 0 0.75rem #ffff);
 }
 
 input {
@@ -73,25 +81,28 @@ button {
   border: none;
   border-radius: 4px;
   padding: 0.5rem 0.8rem;
+  cursor: pointer;
 }
 
 .container {
-  margin-left: 20vw;
-  margin-right: 20vw;
-  padding-bottom: 10vh;
-  text-align: right;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .main-header {
+  padding: 30px 25px 10px 25px;
   line-height: 1rem;
 }
 
 .main-header input {
-  width: 100vw;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.main-header > h5 {
+.main-header h5 {
   margin: 0 0 1rem 0;
+  font-size: 15px;
 }
 
 .search-field {
@@ -99,6 +110,10 @@ button {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+}
+
+.my-deck h5 {
+  margin: 0 0 0 0;
 }
 
 .card-count {
@@ -125,6 +140,11 @@ button {
 .myDeck li {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.no-entries {
+  height: 80vh;
+  text-align: center;
 }
 
 .page-link li {
@@ -156,19 +176,31 @@ button {
   margin-top: 1rem;
 }
 
+.padding-top-1 {
+  padding-top: 3rem;
+}
+
+.padding-bottom-2 {
+  padding-bottom: 2rem;
+}
+
 .padding-top-3 {
   padding-top: 3rem;
 }
 
-.right {
-  float: right;
+.padding-bottom-3 {
+  padding-bottom: 3rem;
+}
+
+.padding-top-5 {
+  padding-top: 5rem;
+}
+
+.active {
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 700px) {
-  main-header {
-    line-height: 1rem;
-  }
-
   input {
     width: 50vh;
   }
@@ -179,10 +211,6 @@ button {
 }
 
 @media screen and (min-width: 1100px) {
-  main-header {
-    line-height: 1rem;
-  }
-
   input {
     width: 70vh;
   }
