@@ -17,6 +17,7 @@ if (prevData) {
 window.addEventListener('beforeunload', handleLocalStorage);
 
 function handleLocalStorage(event) {
+  data.myDeck.pageTotal = 0;
   var dataJSON = JSON.stringify(data);
   localStorage.setItem('javascript-local-storage', dataJSON);
 }

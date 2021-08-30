@@ -1,4 +1,4 @@
-/* global data, $views, $nextPage, $cardCount */
+/* global data, $views, $pageLink, $cardCount */
 /* exported showView, setCardCount, showPage, hidePage */
 
 function showView(viewMode) {
@@ -15,10 +15,10 @@ function showView(viewMode) {
     case 'add':
     case 'myCard':
     case 'pokemon':
-      $nextPage.className += ' hidden';
+      $pageLink.children[4].className = 'hidden';
       break;
     default:
-      $nextPage.className = 'next-link';
+      $pageLink.children[4].className = '';
   }
 }
 
@@ -27,12 +27,12 @@ function setCardCount() {
 }
 
 function hidePage(elementArray, start, end) {
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     if (i >= elementArray.length) {
       return;
     }
-    var className = elementArray[i].className;
-    var hiddenIndex = className.indexOf('hidden');
+    const className = elementArray[i].className;
+    const hiddenIndex = className.indexOf('hidden');
     if (hiddenIndex === -1) {
       elementArray[i].className += ' hidden';
     }
@@ -40,12 +40,12 @@ function hidePage(elementArray, start, end) {
 }
 
 function showPage(elementArray, start, end) {
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     if (i < 0 || i >= elementArray.length) {
       return;
     }
-    var className = elementArray[i].className;
-    var hiddenIndex = className.indexOf('hidden');
+    const className = elementArray[i].className;
+    const hiddenIndex = className.indexOf('hidden');
     if (hiddenIndex !== -1) {
       elementArray[i].className = className.slice(0, hiddenIndex - 1);
     }
