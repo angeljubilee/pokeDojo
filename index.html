@@ -14,8 +14,8 @@
 </head>
 <body>
   <header>
-    <section>
-      <div class="main-header row">
+    <div class="main-header container">
+      <div class="row">
         <div class="column-half">
           <h1>Pok&eacute;Dojo</h1>
           <h5>Be The Very Best Cause No One Ever Was!</h5>
@@ -24,11 +24,8 @@
           </div>
         </div>
       </div>
-      <div class="series-logo hidden">
-        <img src="#">
-      </div>
-      <div class="row flex-end">
-        <div class="column-half">
+      <div class="row">
+        <div class="column-full">
           <div class="row flex-end">
             <div class="my-deck row flex-center align-center">
               <a href="#">
@@ -39,7 +36,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </header>
   <main>
     <div class="container">
@@ -48,6 +45,9 @@
         </ul>
       </div>
       <div class="view hidden" data-view="cards">
+        <div class="series-logo hidden">
+          <img src="#">
+        </div>
         <ul class="cards row flex-center">
         </ul>
       </div>
@@ -57,7 +57,7 @@
       </div>
       <ul class="page-link row flex-end align-center">
         <li class="hidden"><a href="#">&lt; Back</a></li>
-        <li><a href="#">1</a></li>
+        <li><a class="active" href="#">1</a></li>
         <li><a href="#">2</a></li>
         <li><a href="#">3</a></li>
         <li><a href="#">Next &gt;</a></li>
@@ -120,6 +120,15 @@
               <div class="row flex-end">
                 <button class="pokemon-back">Back</button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" data-view="empty">
+        <div class="no-entries">
+          <div class="row flex-center padding-top-3">
+            <div class="column-half">
+              <p>No entries found for your search.</p>
             </div>
           </div>
         </div>

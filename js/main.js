@@ -42,41 +42,21 @@ const $pokemon = document.querySelector('.pokemon');
 const $pokemonBackButton = document.querySelector('.pokemon-back');
 const $removeCard = document.querySelector('.remove-card');
 
-window.addEventListener('DOMContentLoaded', loadData);
-$logo.addEventListener('click', handleHeaderLogoClick);
-$logosUL.addEventListener('click', handleLogoClick);
-$search.addEventListener('keypress', handleSearch);
-$pageLink.addEventListener('click', handlePageClick);
-$cardsUL.addEventListener('click', handleCardClick);
-$addButton.addEventListener('click', handleAddClick);
-$backLink.addEventListener('click', handleBackClick);
-$myDeckLink.addEventListener('click', handleMyDeckClick);
-$myDeck.addEventListener('click', handleMyDeckCardClick);
-$pokemonTitle.addEventListener('click', handlePokemonClick);
-$pokemonBackButton.addEventListener('click', handlePokemonBack);
-$removeCard.addEventListener('click', handleRemove);
-
-function loadData(event) {
+window.addEventListener('DOMContentLoaded', event => {
   setCardCount();
   getPokemonCardSets();
-}
+});
 
-function handleHeaderLogoClick(event) {
-  showView('logos');
-  $logo.className += ' hidden';
-  $main.className = 'main-header row';
-}
-
-function handleLogoClick(event) {
+$logosUL.addEventListener('click', event => {
   if (!event.target.matches('img')) {
     return;
   }
   const setIndex = event.target.closest('li').getAttribute('set-id');
   getPokemonCards(pokemonCardSets.items[setIndex].id);
   seriesLogo = pokemonCardSets.items[setIndex].images.logo;
-}
+});
 
-function handleSearch(event) {
+$search.addEventListener('keypress', event => {
   if (event.keyCode !== 13) {
     return;
   }
@@ -89,7 +69,17 @@ function handleSearch(event) {
     getPokemonCardsByPokemon($search.value);
   }
   $search.value = '';
-}
+});
+
+$pageLink.addEventListener('click', (handlePageClick));
+$cardsUL.addEventListener('click', handleCardClick);
+$addButton.addEventListener('click', handleAddClick);
+$backLink.addEventListener('click', handleBackClick);
+$myDeckLink.addEventListener('click', handleMyDeckClick);
+$myDeck.addEventListener('click', handleMyDeckCardClick);
+$pokemonTitle.addEventListener('click', handlePokemonClick);
+$pokemonBackButton.addEventListener('click', handlePokemonBack);
+$removeCard.addEventListener('click', handleRemove);
 
 function handlePageClick(event) {
   const link = event.target.textContent;
@@ -203,6 +193,10 @@ function getPokemonCardSets() {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCardSets.items = xhr.response.data;
+    if (!pokemonCardSets.items.length) {
+      showView('empty');
+      return;
+    }
     createLogosDOM(0, pokemonCardSets.numPerPage);
     currentPage.data = pokemonCardSets;
     currentPage.$UL = $logosUL;
@@ -223,10 +217,13 @@ function getPokemonCards(series) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
+    if (!pokemonCards.cards.length) {
+      showView('empty');
+      return;
+    }
     pokemonCards.pageNum = 0;
     createCardsDOM(0, pokemonCards.numPerPage);
     data.view = 'cards';
-    $main.className += ' hidden';
     $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
     $logo.className = 'series-logo';
     showView('cards');
@@ -241,6 +238,10 @@ function getPokemonCardsByPokemon(name) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
+    if (!pokemonCards.cards.length) {
+      showView('empty');
+      return;
+    }
     const start = pokemonCards.pageNum * pokemonCards.numPerPage;
     createCardsDOM(start, start + pokemonCards.numPerPage);
     data.view = 'cards';
