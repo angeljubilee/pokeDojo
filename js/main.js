@@ -41,6 +41,7 @@ const $pokemonTitle = document.querySelector('.pokemon-title');
 const $pokemon = document.querySelector('.pokemon');
 const $pokemonBackButton = document.querySelector('.pokemon-back');
 const $removeCard = document.querySelector('.remove-card');
+const $pokeDojo = document.querySelector('.pokedojo-title');
 
 window.addEventListener('DOMContentLoaded', event => {
   setCardCount();
@@ -80,6 +81,11 @@ $myDeck.addEventListener('click', handleMyDeckCardClick);
 $pokemonTitle.addEventListener('click', handlePokemonClick);
 $pokemonBackButton.addEventListener('click', handlePokemonBack);
 $removeCard.addEventListener('click', handleRemove);
+$pokeDojo.addEventListener('click', handleHeadingClick);
+
+function handleHeadingClick(event) {
+  showView('logos');
+}
 
 function handlePageClick(event) {
   const link = event.target.textContent;
@@ -183,6 +189,7 @@ function handleRemove(event) {
   const cardIndex = $myCard.getAttribute('data-view');
   $myDeck.children[cardIndex].remove();
   data.myDeck.items.splice(cardIndex, 1);
+  setCardCount();
   showView('myDeck');
 }
 
@@ -206,14 +213,18 @@ function getPokemonCardSets() {
     const totalPages = Math.ceil(pokemonCardSets.items.length /
       pokemonCardSets.numPerPage);
     displayPageLinks(totalPages);
+    showView('logos');
+  });
+  xhr.addEventListener('error', function () {
+    showView('error');
   });
   xhr.send();
+  showView('loading');
 }
 
 function getPokemonCards(series) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + series);
-  xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
@@ -228,13 +239,16 @@ function getPokemonCards(series) {
     $logo.className = 'series-logo';
     showView('cards');
   });
+  xhr.addEventListener('error', function () {
+    showView('error');
+  });
   xhr.send();
+  showView('loading');
 }
 
 function getPokemonCardsByPokemon(name) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=name:' + name);
-  xhr.setRequestHeader('X-Api-Key', 'e29addcb-977c-449c-8e43-f97935b91eb6');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
@@ -247,7 +261,11 @@ function getPokemonCardsByPokemon(name) {
     data.view = 'cards';
     showView('cards');
   });
+  xhr.addEventListener('error', function () {
+    showView('error');
+  });
   xhr.send();
+  showView('loading');
 }
 
 function getPokemonData(name) {
@@ -266,7 +284,12 @@ function getPokemonData(name) {
       data.myDeck.items[cardIndex].flavorText;
     showView('pokemon');
   });
+  xhr.addEventListener('error', function () {
+    showView('error');
+  });
   xhr.send();
+
+  showView('loading');
 }
 
 function createLogosDOM(start, end) {
