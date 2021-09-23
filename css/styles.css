@@ -121,10 +121,10 @@ button {
   margin: 0 0 0 0;
 }
 
-.myDeck li {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
+/* .myDeck li {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} */
 
 .card-count {
   background-color: white;
@@ -144,11 +144,7 @@ button {
   padding-top: 1rem;
 }
 
-.my-card {
-  padding: 2rem;
-}
-
-.pokemon {
+.card {
   padding: 2rem;
 }
 
