@@ -17,8 +17,10 @@
     <div class="main-header container">
       <div class="row">
         <div class="column-half">
-          <h1>Pok&eacute;Dojo</h1>
-          <h5>Be The Very Best Cause No One Ever Was!</h5>
+          <div class="pokedojo-title">
+            <h1>Pok&eacute;Dojo</h1>
+            <h5>Be The Very Best Cause No One Ever Was!</h5>
+          </div>
           <div class="search-field">
             <input placeholder="Search for a Pokemon or Card Series" required>
           </div>
@@ -45,8 +47,12 @@
         </ul>
       </div>
       <div class="view hidden" data-view="cards">
-        <div class="series-logo hidden">
-          <img src="#">
+        <div class="row flex-center">
+          <div class="column-half">
+            <div class="series-logo hidden">
+              <img src="#">
+            </div>
+          </div>
         </div>
         <ul class="cards row flex-center">
         </ul>
@@ -63,22 +69,24 @@
         <li><a href="#">Next &gt;</a></li>
       </ul>
       <div class="view hidden" data-view="add">
-        <div class="row flex-center">
-          <div class="column-half">
-            <img class="pokemon-card" src="./images/SM05_hires.png">
+        <div class="card">
+          <div class="row flex-center padding-top-1">
+            <div class="column-half">
+              <img class="pokemon-card " src="./images/SM05_hires.png">
+            </div>
           </div>
-        </div>
-        <div class="row flex-center align-center margin-top-1">
-          <div class="column-half">
-            <div class="row align-center space-between">
-              <a class="back-link" href="#">Back</a>
-              <button class="add-button">Add Card</button>
+          <div class="row flex-center align-center margin-top-1">
+            <div class="column-half margin-bottom-1">
+              <div class="row align-center space-between">
+                <a class="back-link" href="#">Back</a>
+                <button class="add-button">Add Card</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="view hidden" data-view="myCard">
-        <div class="my-card padding-top-3">
+        <div class="my-card card margin-bottom-1">
           <div class="row flex-center">
             <div class="column-half text-left">
               <div>
@@ -101,7 +109,7 @@
       </div>
       <div class="view hidden" data-view="pokemon">
         <div class="pokemon">
-          <div class="row flex-center padding-top-3">
+          <div class="row flex-center">
             <div class="column-half">
               <img src="images/133.png">
             </div>
@@ -131,6 +139,21 @@
               <p>No entries found for your search.</p>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="view hidden" data-view="loading">
+        <div class="row flex-center">
+          <div class="lds-ring flex-center">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" data-view="error">
+        <div class="row flex-center">
+          <div>Error fetching</div>
         </div>
       </div>
     </div>

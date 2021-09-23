@@ -1,6 +1,11 @@
 body {
   font-family: 'Raleway', sans-serif;
   color: white;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    );
 }
 
 header {
@@ -20,11 +25,6 @@ section {
 }
 
 main {
-  background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.7)
-    );
   width: 100vw;
 }
 
@@ -62,7 +62,6 @@ li {
 
 img {
   width: 100%;
-  cursor: pointer;
 }
 
 img:hover {
@@ -85,9 +84,14 @@ button {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 100vh;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 2rem 0 2rem;
+}
+
+.pokedojo-title {
+  cursor: pointer;
 }
 
 .main-header {
@@ -129,17 +133,28 @@ button {
 
 .series-logo img {
   display: block;
-  width: 40%;
   margin: 0 auto;
-}
-
-.pokemon-card {
   padding-top: 3rem;
 }
 
-.myDeck li {
-  padding-left: 2rem;
-  padding-right: 2rem;
+.logos img {
+  cursor: pointer;
+}
+
+.pokemon img {
+  cursor: pointer;
+}
+
+.cards li > img {
+  cursor: pointer;
+}
+
+.card {
+  padding: 2rem;
+}
+
+.myDeck li > img {
+  cursor: pointer;
 }
 
 .no-entries {
@@ -149,6 +164,48 @@ button {
 
 .page-link li {
   padding: 0.5rem;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .space-between {
@@ -176,6 +233,10 @@ button {
   margin-top: 1rem;
 }
 
+.margin-bottom-1 {
+  margin-bottom: 1rem;
+}
+
 .padding-top-1 {
   padding-top: 3rem;
 }
@@ -200,9 +261,21 @@ button {
   text-decoration: underline;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 768px) {
   input {
     width: 50vh;
+  }
+
+  .container {
+    max-width: 800px;
+  }
+
+  .main-header {
+    padding: 4rem 4rem 1rem 4rem;
+  }
+
+  main {
+    margin-top: 4rem;
   }
 
   .search-field {
