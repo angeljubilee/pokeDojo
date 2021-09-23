@@ -121,11 +121,6 @@ button {
   margin: 0 0 0 0;
 }
 
-/* .myDeck li {
-  padding-left: 1rem;
-  padding-right: 1rem;
-} */
-
 .card-count {
   background-color: white;
   border: none;
@@ -139,9 +134,8 @@ button {
 
 .series-logo img {
   display: block;
-  width: 40%;
   margin: 0 auto;
-  padding-top: 1rem;
+  padding-top: 3rem;
 }
 
 .card {
