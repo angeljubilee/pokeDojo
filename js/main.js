@@ -34,8 +34,8 @@ const $logo = document.querySelector('.series-logo');
 const $main = document.querySelector('.main-header');
 let $views = document.querySelectorAll('.view');
 let $cardCount = document.querySelector('.card-count');
-const $myDeckLink = document.querySelector('.my-deck');
-const $myDeck = document.querySelector('.myDeck');
+const $myDeckLink = document.querySelector('.my-deck-list');
+const $myDeck = document.querySelector('.my-deck');
 const $myCard = document.querySelector('.my-card');
 const $pokemonTitle = document.querySelector('.pokemon-title');
 const $pokemon = document.querySelector('.pokemon');
@@ -135,6 +135,7 @@ function handleCardClick(event) {
   }
   const cardIndex = event.target.getAttribute('data-view');
   const pokemonCard = pokemonCards.cards[cardIndex];
+
   $pokemonCard.setAttribute('src', pokemonCard.images.large);
   $pokemonCard.setAttribute('data-view', cardIndex);
   showView('add');
@@ -338,6 +339,7 @@ function createCardsDOM(start, end) {
     }
     $cardsView.replaceChild($ul, $cardsUL);
     $cardsUL = $ul;
+    $cardsUL.addEventListener('click', handleCardClick);
   }
 }
 
