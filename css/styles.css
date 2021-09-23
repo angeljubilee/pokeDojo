@@ -62,7 +62,6 @@ li {
 
 img {
   width: 100%;
-  cursor: pointer;
 }
 
 img:hover {
@@ -138,8 +137,24 @@ button {
   padding-top: 3rem;
 }
 
+.logos img {
+  cursor: pointer;
+}
+
+.pokemon img {
+  cursor: pointer;
+}
+
+.cards li > img {
+  cursor: pointer;
+}
+
 .card {
   padding: 2rem;
+}
+
+.myDeck li > img {
+  cursor: pointer;
 }
 
 .no-entries {
