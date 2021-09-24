@@ -30,6 +30,7 @@ h1 {
   font-weight: 400;
   letter-spacing: 0.1rem;
   margin: 0 0 1rem 0;
+  line-height: 2rem;
 }
 
 h4 {
@@ -88,7 +89,6 @@ button {
 
 .main-header {
   padding: 2rem 1.8rem 0.8rem 1.8rem;
-  line-height: 1.2rem;
 }
 
 .main-header input {
@@ -303,4 +303,5 @@ button {
   .search-field {
     justify-content: space-between;
   }
+}
 }
