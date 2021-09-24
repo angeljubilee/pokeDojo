@@ -16,6 +16,8 @@ function showView(viewMode) {
     case 'myCard':
     case 'pokemon':
     case 'empty':
+    case 'loading':
+    case 'error':
       $pageLink.className += ' hidden';
       break;
     default:

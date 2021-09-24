@@ -20,24 +20,20 @@ header {
   color: white;
 }
 
-section {
-  padding: 8vh 10vw 2vh 10vw;
-}
-
 main {
   width: 100vw;
 }
 
 h1 {
   font-family: 'Fredoka One', cursive;
-  font-size: 34px;
+  font-size: 2.5rem;
   font-weight: 400;
-  letter-spacing: 2px;
+  letter-spacing: 0.15rem;
   margin: 0 0 1rem 0;
 }
 
 h4 {
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
 }
 
 a {
@@ -51,7 +47,7 @@ a:hover {
 
 ul {
   margin: 0;
-  padding: 40px 20px;
+  padding: 2rem 1rem;
 }
 
 li {
@@ -62,10 +58,6 @@ li {
 
 img {
   width: 100%;
-}
-
-img:hover {
-  filter: drop-shadow(0 0 0.75rem #ffff);
 }
 
 input {
@@ -95,7 +87,7 @@ button {
 }
 
 .main-header {
-  padding: 30px 25px 10px 25px;
+  padding: 2rem 1.8rem 0.8rem 1.8rem;
   line-height: 1rem;
 }
 
@@ -106,7 +98,7 @@ button {
 
 .main-header h5 {
   margin: 0 0 1rem 0;
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 .search-field {
@@ -137,15 +129,35 @@ button {
   padding-top: 3rem;
 }
 
-.logos img {
-  cursor: pointer;
-}
-
 .pokemon img {
   cursor: pointer;
 }
 
-.cards li > img {
+.logos img {
+  cursor: pointer;
+}
+
+.cards img {
+  cursor: pointer;
+}
+
+.my-deck-list li > img {
+  cursor: pointer;
+}
+
+.pokemon img:hover {
+  filter: drop-shadow(0 0 0.75rem #ffff);
+}
+
+.logos img:hover {
+  filter: drop-shadow(0 0 0.75rem #ffff);
+}
+
+.cards img:hover {
+  filter: drop-shadow(0 0 0.75rem #ffff);
+}
+
+.pokemon .cards li > img {
   cursor: pointer;
 }
 
@@ -153,8 +165,8 @@ button {
   padding: 2rem;
 }
 
-.myDeck li > img {
-  cursor: pointer;
+.my-deck-list li > img:hover {
+  filter: drop-shadow(0 0 0.75rem #ffff);
 }
 
 .no-entries {
