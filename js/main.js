@@ -4,7 +4,7 @@
 const pokemonCardSets = {
   items: [],
   pageTotal: 0,
-  numPerPage: 16
+  numPerPage: 15
 };
 
 const pokemonCards = {
@@ -34,8 +34,8 @@ const $logo = document.querySelector('.series-logo');
 const $main = document.querySelector('.main-header');
 let $views = document.querySelectorAll('.view');
 let $cardCount = document.querySelector('.card-count');
-const $myDeckLink = document.querySelector('.my-deck-list');
-const $myDeck = document.querySelector('.my-deck');
+const $myDeckLink = document.querySelector('.my-deck');
+const $myDeck = document.querySelector('.my-deck-list');
 const $myCard = document.querySelector('.my-card');
 const $pokemonTitle = document.querySelector('.pokemon-title');
 const $pokemon = document.querySelector('.pokemon');
@@ -72,29 +72,14 @@ $search.addEventListener('keypress', event => {
   $search.value = '';
 });
 
-$pageLink.addEventListener('click', (handlePageClick));
-$cardsUL.addEventListener('click', handleCardClick);
-$addButton.addEventListener('click', handleAddClick);
-$backLink.addEventListener('click', handleBackClick);
-$myDeckLink.addEventListener('click', handleMyDeckClick);
-$myDeck.addEventListener('click', handleMyDeckCardClick);
-$pokemonTitle.addEventListener('click', handlePokemonClick);
-$pokemonBackButton.addEventListener('click', handlePokemonBack);
-$removeCard.addEventListener('click', handleRemove);
-$pokeDojo.addEventListener('click', handleHeadingClick);
-
-function handleHeadingClick(event) {
-  showView('logos');
-}
-
-function handlePageClick(event) {
+$pageLink.addEventListener('click', event => {
   const link = event.target.textContent;
   let nextPageNum = 0;
   switch (link) {
-    case '< Back' :
+    case '< Back':
       nextPageNum = currentPage.pageNum - 1;
       break;
-    case 'Next >' :
+    case 'Next >':
       nextPageNum = currentPage.pageNum + 1;
       break;
     default:
@@ -127,7 +112,66 @@ function handlePageClick(event) {
 
   currentPage.pageNum = nextPageNum;
   updatePageLink(currentPage);
-}
+});
+
+$addButton.addEventListener('click', event => {
+  const cardIndex = $pokemonCard.getAttribute('data-view');
+  data.myDeck.items.push(pokemonCards.cards[cardIndex]);
+  setCardCount();
+  showView('cards');
+});
+
+$backLink.addEventListener('click', event => {
+  showView('cards');
+});
+
+$myDeckLink.addEventListener('click', event => {
+  currentPage.pageNum = 0;
+  if (!data.myDeck.pageTotal) {
+    createMyDeckDOM(0, data.myDeck.numPerPage);
+    data.myDeck.pageTotal++;
+  } else {
+    showPage($myDeck.children, 0, data.myDeck.numPerPage);
+  }
+
+  showView('myDeck');
+});
+
+$myDeck.addEventListener('click', event => {
+  if (!event.target.matches('img')) {
+    return;
+  }
+  const cardIndex = event.target.getAttribute('data-view');
+  const card = data.myDeck.items[cardIndex];
+  $myCard.getElementsByTagName('h4')[0].textContent = card.name;
+  $myCard.getElementsByTagName('img')[0].setAttribute('src', card.images.large);
+  $myCard.getElementsByTagName('a')[1].setAttribute('href', card.tcgplayer.url);
+  $myCard.setAttribute('data-view', cardIndex);
+  showView('myCard');
+});
+
+$pokemonTitle.addEventListener('click', event => {
+  getPokemonData(event.target.textContent);
+});
+
+$pokemonBackButton.addEventListener('click', event => {
+  showView('myCard');
+});
+
+$removeCard.addEventListener('click', event => {
+  const $myCard = event.target.closest('.my-card');
+  const cardIndex = $myCard.getAttribute('data-view');
+  $myDeck.children[cardIndex].remove();
+  data.myDeck.items.splice(cardIndex, 1);
+  setCardCount();
+  showView('myDeck');
+});
+
+$pokeDojo.addEventListener('click', event => {
+  showView('logos');
+});
+
+$cardsUL.addEventListener('click', handleCardClick);
 
 function handleCardClick(event) {
   if (!event.target.matches('img')) {
@@ -139,59 +183,6 @@ function handleCardClick(event) {
   $pokemonCard.setAttribute('src', pokemonCard.images.large);
   $pokemonCard.setAttribute('data-view', cardIndex);
   showView('add');
-}
-
-function handleAddClick(event) {
-  const cardIndex = $pokemonCard.getAttribute('data-view');
-  data.myDeck.items.push(pokemonCards.cards[cardIndex]);
-  setCardCount();
-  showView('cards');
-}
-
-function handleBackClick(event) {
-  showView('cards');
-}
-
-function handleMyDeckClick(event) {
-  currentPage.pageNum = 0;
-  if (!data.myDeck.pageTotal) {
-    createMyDeckDOM(0, data.myDeck.numPerPage);
-    data.myDeck.pageTotal++;
-  } else {
-    showPage($myDeck.children, 0, data.myDeck.numPerPage);
-  }
-
-  showView('myDeck');
-}
-
-function handleMyDeckCardClick(event) {
-  if (!event.target.matches('img')) {
-    return;
-  }
-  const cardIndex = event.target.getAttribute('data-view');
-  const card = data.myDeck.items[cardIndex];
-  $myCard.getElementsByTagName('h4')[0].textContent = card.name;
-  $myCard.getElementsByTagName('img')[0].setAttribute('src', card.images.large);
-  $myCard.getElementsByTagName('a')[1].setAttribute('href', card.tcgplayer.url);
-  $myCard.setAttribute('data-view', cardIndex);
-  showView('myCard');
-}
-
-function handlePokemonClick(event) {
-  getPokemonData(event.target.textContent);
-}
-
-function handlePokemonBack(event) {
-  showView('myCard');
-}
-
-function handleRemove(event) {
-  const $myCard = event.target.closest('.my-card');
-  const cardIndex = $myCard.getAttribute('data-view');
-  $myDeck.children[cardIndex].remove();
-  data.myDeck.items.splice(cardIndex, 1);
-  setCardCount();
-  showView('myDeck');
 }
 
 function getPokemonCardSets() {
@@ -225,7 +216,7 @@ function getPokemonCardSets() {
 
 function getPokemonCards(series) {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=set.id:' + series);
+  xhr.open('GET', `https://api.pokemontcg.io/v2/cards?q=set.id:${series}`);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
@@ -249,7 +240,7 @@ function getPokemonCards(series) {
 
 function getPokemonCardsByPokemon(name) {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://api.pokemontcg.io/v2/cards?q=name:' + name);
+  xhr.open('GET', `https://api.pokemontcg.io/v2/cards?q=name:${name}`);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
@@ -271,7 +262,7 @@ function getPokemonCardsByPokemon(name) {
 
 function getPokemonData(name) {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://pokeapi.co/api/v2/pokemon/' + name.toLowerCase());
+  xhr.open('GET', `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonData = xhr.response;
@@ -323,7 +314,7 @@ function createCardsDOM(start, end) {
       break;
     }
     const $li = document.createElement('li');
-    $li.className = 'column-fifth';
+    $li.className = 'column-fourth';
     const $img = document.createElement('img');
     $img.setAttribute('src', pokemonCards.cards[i].images.small);
     $img.setAttribute('data-view', i);
