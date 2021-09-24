@@ -1,4 +1,4 @@
-# pokeDojo-ajax-project
+# pokemon-card-collector
 
 A dynamic HTML, CSS, and JavaScript solo project.
 
@@ -10,7 +10,7 @@ A Web application for people who want to look up Pokemon cards.
 
 I wanted to build a website that connects to a public API.  I chose Pokemon TCG
 because I like Pokemon and I enjoy the fun, colorful images on the cards.  Users
-can use the website to see every pokemon card ever released starting with the
+can use the website to see every Pokemon card ever released starting with the
 latest pack.  The website also provides links on where to purchase a particular
 card.
 
@@ -41,8 +41,8 @@ Try the application live at [https://angeljubilee.github.io/pokeDojo](https://an
 
 ## Preview
 
-![SGT React](assets/pokeDojo1.png)
-![SGT React](assets/pokeDojo2.png)
+![SGT React](images/pokeDojo1.png)
+![SGT React](images/pokeDojo2.png)
 
 ## Development
 

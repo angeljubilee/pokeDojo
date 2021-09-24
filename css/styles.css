@@ -28,7 +28,7 @@ h1 {
   font-family: 'Fredoka One', cursive;
   font-size: 2.5rem;
   font-weight: 400;
-  letter-spacing: 0.15rem;
+  letter-spacing: 0.1rem;
   margin: 0 0 1rem 0;
 }
 
@@ -47,7 +47,7 @@ a:hover {
 
 ul {
   margin: 0;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
 }
 
 li {
@@ -88,7 +88,7 @@ button {
 
 .main-header {
   padding: 2rem 1.8rem 0.8rem 1.8rem;
-  line-height: 1rem;
+  line-height: 1.2rem;
 }
 
 .main-header input {
@@ -287,7 +287,7 @@ button {
   }
 
   main {
-    margin-top: 4rem;
+    margin-top: 1rem;
   }
 
   .search-field {
