@@ -48,11 +48,11 @@ Try the application live at [https://angeljubilee.github.io/pokeDojo](https://an
 
 ### System Requirements
 
-Up to date browsers
+Up to date browser
 
 ### Getting Started
 
 1.  Clone the repository.
-    git clone git@github.com:angeljubilee/pokeDojo.git
+    git@github.com:angeljubilee/pokemon-card-collector.git
 
 2.  Open index.html in your browser.
