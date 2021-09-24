@@ -53,6 +53,9 @@ Up to date browser
 ### Getting Started
 
 1.  Clone the repository.
-    git@github.com:angeljubilee/pokemon-card-collector.git
+    ```shell
+    git clone git@github.com:angeljubilee/pokemon-card-collector.git
+    cd pokemon-card-collector
+    ```
 
 2.  Open index.html in your browser.
