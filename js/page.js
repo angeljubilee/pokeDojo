@@ -1,5 +1,5 @@
-/* global data, $views, $pageLink, $cardCount */
-/* exported showView, setCardCount, showPage, hidePage */
+/* global data, $views, $pageLinks, $cardCount */
+/* exported showView, setCardCount, showPage, hidePage, updatePageLinks */
 
 function showView(viewMode) {
   data.view = viewMode;
@@ -18,10 +18,10 @@ function showView(viewMode) {
     case 'empty':
     case 'loading':
     case 'error':
-      $pageLink.className += ' hidden';
+      $pageLinks.className += ' hidden';
       break;
     default:
-      $pageLink.className = 'page-link row flex-end align-center';
+      $pageLinks.className = 'page-links row flex-end align-center';
   }
 }
 
@@ -50,7 +50,25 @@ function showPage(elementArray, start, end) {
     const className = elementArray[i].className;
     const hiddenIndex = className.indexOf('hidden');
     if (hiddenIndex !== -1) {
+
       elementArray[i].className = className.slice(0, hiddenIndex - 1);
     }
+  }
+}
+
+function updatePageLinks(currentPage) {
+  const totalPages = Math.ceil(currentPage.data.items.length /
+    currentPage.data.numPerPage);
+
+  if (currentPage.pageNum === 0) {
+    $pageLinks.children[0].classList = 'hidden';
+  } else {
+    $pageLinks.children[0].classList = '';
+  }
+
+  if (currentPage.pageNum >= totalPages - 1) {
+    $pageLinks.children[1].className = 'hidden';
+  } else {
+    $pageLinks.children[1].className = '';
   }
 }
