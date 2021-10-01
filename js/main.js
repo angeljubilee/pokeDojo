@@ -4,7 +4,7 @@
 const pokemonCardSets = {
   items: [],
   pageTotal: 0,
-  numPerPage: 15
+  numPerPage: 16
 };
 
 const pokemonCards = {
@@ -154,7 +154,7 @@ $pageLinks.addEventListener('click', event => {
 
   if (nextPageNum < currentPage.data.pageTotal) {
     start = nextPageNum * currentPage.data.numPerPage;
-    showPage(currentPage.$UL.children, start, start + currentPage.numPerPage);
+    showPage(currentPage.$UL.children, start, start + currentPage.data.numPerPage);
     currentPage.pageNum = nextPageNum;
     updatePageLinks(currentPage);
     return;
@@ -225,8 +225,8 @@ function getPokemonCards(series) {
   xhr.open('GET', `https://api.pokemontcg.io/v2/cards?q=set.id:${series}`);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    pokemonCards.cards = xhr.response.data;
-    if (!pokemonCards.cards) {
+    pokemonCards.items = xhr.response.data;
+    if (!pokemonCards.items) {
       showView('empty');
       return;
     }
@@ -252,8 +252,8 @@ function getPokemonCardsByPokemon(name) {
   xhr.open('GET', `https://api.pokemontcg.io/v2/cards?q=name:${name}`);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    pokemonCards.cards = xhr.response.data;
-    if (!pokemonCards.cards) {
+    pokemonCards.items = xhr.response.data;
+    if (!pokemonCards.items) {
       showView('empty');
       return;
     }
@@ -321,13 +321,13 @@ function createCardsDOM(start, end) {
   }
 
   for (let i = start; i < end; i++) {
-    if (i >= pokemonCards.cards.length) {
+    if (i >= pokemonCards.items.length) {
       break;
     }
     const $li = document.createElement('li');
     $li.className = 'column-third';
     const $img = document.createElement('img');
-    $img.setAttribute('src', pokemonCards.cards[i].images.small);
+    $img.setAttribute('src', pokemonCards.items[i].images.small);
     $img.setAttribute('data-view', i);
     $li.appendChild($img);
     $ul.appendChild($li);

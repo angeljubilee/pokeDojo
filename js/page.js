@@ -50,6 +50,7 @@ function showPage(elementArray, start, end) {
     const className = elementArray[i].className;
     const hiddenIndex = className.indexOf('hidden');
     if (hiddenIndex !== -1) {
+
       elementArray[i].className = className.slice(0, hiddenIndex - 1);
     }
   }
