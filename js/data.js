@@ -5,7 +5,7 @@ var data = {
   myDeck: {
     items: [],
     pageTotal: 0,
-    numPerPage: 8
+    numPerPage: 9
   }
 };
 
