@@ -5,6 +5,7 @@
 
 .column-full,
 .column-half,
+.column-third,
 .column-fourth,
 .column-fifth {
   width: 100%;
@@ -13,12 +14,17 @@
 @media screen and (min-width: 576px) {
   .column-half,
   .column-fourth,
+  .column-third,
   .column-fifth {
     width: 50%;
   }
 }
 
 @media screen and (min-width: 900px) {
+  .column-third {
+    width: calc(100% / 3);
+  }
+
   .column-fourth {
     width: 25%;
   }

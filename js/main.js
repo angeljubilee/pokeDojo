@@ -1,5 +1,5 @@
-/* global data, showView, setCardCount, showPage, hidePage */
-/* exported $views, $cardCount */
+/* global data, showView, setCardCount, showPage, hidePage, updatePageLinks */
+/* exported $views, $cardCount, $pageLinks */
 
 const pokemonCardSets = {
   items: [],
@@ -25,11 +25,12 @@ let pokemonData = {};
 
 const $logosUL = document.querySelector('.logos');
 const $search = document.querySelector('input');
-const $pageLink = document.querySelector('.page-link');
+const $pageLinks = document.querySelector('.page-links');
 const $pokemonCard = document.querySelector('.pokemon-card');
 const $addButton = document.querySelector('.add-button');
 const $backLink = document.querySelector('.back-link');
 let $cardsUL = document.querySelector('.cards');
+const $cards = document.querySelector('.card-list');
 const $logo = document.querySelector('.series-logo');
 const $main = document.querySelector('.main-header');
 let $views = document.querySelectorAll('.view');
@@ -41,7 +42,7 @@ const $pokemonTitle = document.querySelector('.pokemon-title');
 const $pokemon = document.querySelector('.pokemon');
 const $pokemonBackButton = document.querySelector('.pokemon-back');
 const $removeCard = document.querySelector('.remove-card');
-const $pokeDojo = document.querySelector('.pokedojo-title');
+const $pokemonCardCollector = document.querySelector('.pokemon-card-collector');
 
 window.addEventListener('DOMContentLoaded', event => {
   setCardCount();
@@ -64,7 +65,7 @@ $search.addEventListener('keypress', event => {
 
   const setID = cardSetNames.indexOf($search.value.toLowerCase());
   if (setID > -1) {
-    getPokemonCards(setID);
+    getPokemonCards(pokemonCardSets.items[setID].id);
     seriesLogo = pokemonCardSets.items[setID].images.logo;
   } else {
     getPokemonCardsByPokemon($search.value);
@@ -72,51 +73,13 @@ $search.addEventListener('keypress', event => {
   $search.value = '';
 });
 
-$pageLink.addEventListener('click', event => {
-  const link = event.target.textContent;
-  let nextPageNum = 0;
-  switch (link) {
-    case '< Back':
-      nextPageNum = currentPage.pageNum - 1;
-      break;
-    case 'Next >':
-      nextPageNum = currentPage.pageNum + 1;
-      break;
-    default:
-      nextPageNum = parseInt(link) - 1;
-  }
-
-  let start = currentPage.pageNum * currentPage.data.numPerPage;
-  hidePage(currentPage.$UL.children, start, start + currentPage.data.numPerPage);
-
-  if (nextPageNum <= currentPage.data.pageTotal - 1) {
-    start = nextPageNum * currentPage.data.numPerPage;
-    showPage(currentPage.$UL.children, start,
-      start + currentPage.data.numPerPage);
-    currentPage.pageNum = nextPageNum;
-    updatePageLink(currentPage);
-    return;
-  }
-
-  start = nextPageNum * currentPage.data.numPerPage;
-  if (data.view === 'logos') {
-    createLogosDOM(start, start + pokemonCardSets.numPerPage);
-    pokemonCardSets.pageTotal++;
-  } else if (data.view === 'cards') {
-    createCardsDOM(start, start + pokemonCards.numPerPage);
-    pokemonCards.pageTotal++;
-  } else if (data.view === 'myDeck') {
-    createMyDeckDOM(start, start + data.myDeck.numPerPage);
-    data.myDeck.pageTotal++;
-  }
-
-  currentPage.pageNum = nextPageNum;
-  updatePageLink(currentPage);
-});
-
 $addButton.addEventListener('click', event => {
   const cardIndex = $pokemonCard.getAttribute('data-view');
   data.myDeck.items.push(pokemonCards.cards[cardIndex]);
+  const numPerPage = data.myDeck.numPerPage;
+  if (cardIndex < data.myDeck.pageNum * numPerPage + numPerPage) {
+    createMyDeckCardDOM(cardIndex);
+  }
   setCardCount();
   showView('cards');
 });
@@ -167,11 +130,53 @@ $removeCard.addEventListener('click', event => {
   showView('myDeck');
 });
 
-$pokeDojo.addEventListener('click', event => {
+$pokemonCardCollector.addEventListener('click', event => {
   showView('logos');
 });
 
-$cardsUL.addEventListener('click', handleCardClick);
+$pageLinks.addEventListener('click', event => {
+  const link = event.target.textContent;
+  let nextPageNum;
+  switch (link) {
+    case '< Back':
+      if (currentPage.pageNum > 0) {
+        nextPageNum = currentPage.pageNum - 1;
+      } else {
+        nextPageNum = 0;
+      }
+      break;
+    case 'Next >':
+      nextPageNum = currentPage.pageNum + 1;
+  }
+
+  let start = currentPage.pageNum * currentPage.data.numPerPage;
+  hidePage(currentPage.$UL.children, start, start + currentPage.data.numPerPage);
+
+  if (nextPageNum < currentPage.data.pageTotal) {
+    start = nextPageNum * currentPage.data.numPerPage;
+    showPage(currentPage.$UL.children, start, start + currentPage.numPerPage);
+    currentPage.pageNum = nextPageNum;
+    updatePageLinks(currentPage);
+    return;
+  }
+
+  start = nextPageNum * currentPage.data.numPerPage;
+  if (data.view === 'logos') {
+    createLogosDOM(start, start + pokemonCardSets.numPerPage);
+    pokemonCardSets.pageTotal++;
+  } else if (data.view === 'cards') {
+    createCardsDOM(start, start + pokemonCards.numPerPage);
+    pokemonCards.pageTotal++;
+  } else if (data.view === 'myDeck') {
+    createMyDeckDOM(start, start + data.myDeck.numPerPage);
+    data.myDeck.pageTotal++;
+  }
+
+  currentPage.pageNum = nextPageNum;
+  updatePageLinks(currentPage);
+});
+
+$cards.addEventListener('click', handleCardClick);
 
 function handleCardClick(event) {
   if (!event.target.matches('img')) {
@@ -199,8 +204,9 @@ function getPokemonCardSets() {
     createLogosDOM(0, pokemonCardSets.numPerPage);
     currentPage.data = pokemonCardSets;
     currentPage.$UL = $logosUL;
+    currentPage.pageNum = 0;
     pokemonCardSets.items.forEach(set => {
-      cardSetNames.push(set.name);
+      cardSetNames.push(set.name.toLowerCase());
     });
     const totalPages = Math.ceil(pokemonCardSets.items.length /
       pokemonCardSets.numPerPage);
@@ -220,12 +226,15 @@ function getPokemonCards(series) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
-    if (!pokemonCards.cards.length) {
+    if (!pokemonCards.cards) {
       showView('empty');
       return;
     }
     pokemonCards.pageNum = 0;
     createCardsDOM(0, pokemonCards.numPerPage);
+    currentPage.data = pokemonCards;
+    currentPage.$UL = $cardsUL;
+    currentPage.pageNum = 0;
     data.view = 'cards';
     $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
     $logo.className = 'series-logo';
@@ -244,13 +253,15 @@ function getPokemonCardsByPokemon(name) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     pokemonCards.cards = xhr.response.data;
-    if (!pokemonCards.cards.length) {
+    if (!pokemonCards.cards) {
       showView('empty');
       return;
     }
-    const start = pokemonCards.pageNum * pokemonCards.numPerPage;
-    createCardsDOM(start, start + pokemonCards.numPerPage);
+    createCardsDOM(0, pokemonCards.numPerPage);
     data.view = 'cards';
+    currentPage.data = pokemonCards;
+    currentPage.$UL = $cardsUL;
+    currentPage.pageNum = 0;
     showView('cards');
   });
   xhr.addEventListener('error', function () {
@@ -314,7 +325,7 @@ function createCardsDOM(start, end) {
       break;
     }
     const $li = document.createElement('li');
-    $li.className = 'column-fourth';
+    $li.className = 'column-third';
     const $img = document.createElement('img');
     $img.setAttribute('src', pokemonCards.cards[i].images.small);
     $img.setAttribute('data-view', i);
@@ -322,15 +333,8 @@ function createCardsDOM(start, end) {
     $ul.appendChild($li);
   }
   if (start === 0 && $cardsUL.children.length > 0) {
-    let $cardsView;
-    for (let j = 0; j < $views.length; j++) {
-      if ($views[j].getAttribute('data-view') === 'cards') {
-        $cardsView = $views[j];
-      }
-    }
-    $cardsView.replaceChild($ul, $cardsUL);
+    $cards.replaceChild($ul, $cardsUL);
     $cardsUL = $ul;
-    $cardsUL.addEventListener('click', handleCardClick);
   }
 }
 
@@ -340,7 +344,7 @@ function createMyDeckDOM(start, end) {
       break;
     }
     const $li = document.createElement('li');
-    $li.className = 'column-fourth text-left';
+    $li.className = 'column-third text-left';
     const $h6 = document.createElement('h5');
     $h6.textContent = data.myDeck.items[i].name;
     $li.appendChild($h6);
@@ -357,51 +361,24 @@ function createMyDeckDOM(start, end) {
   showView('myDeck');
 }
 
+function createMyDeckCardDOM(i) {
+  const $li = document.createElement('li');
+  $li.className = 'column-third text-left';
+  const $h6 = document.createElement('h5');
+  $h6.textContent = data.myDeck.items[i].name;
+  $li.appendChild($h6);
+  const $img = document.createElement('img');
+  $img.setAttribute('src', data.myDeck.items[i].images.small);
+  $img.setAttribute('data-view', i);
+  $li.appendChild($img);
+  $myDeck.appendChild($li);
+}
+
 function displayPageLinks(totalPages) {
   if (totalPages < 4) {
     for (let i = totalPages + 1; i < 4; i++) {
-      $pageLink.children[i].className = 'hidden';
+      $pageLinks.children[i].className = 'hidden';
     }
-    $pageLink.children[4].className = 'hidden';
-  }
-}
-
-function updatePageLink(currentPage) {
-  const totalPages = Math.ceil(currentPage.data.items.length /
-  currentPage.data.numPerPage);
-  if (currentPage.pageNum === 0) {
-    $pageLink.children[0].classList = 'hidden';
-  } else {
-    $pageLink.children[0].classList = '';
-  }
-
-  if (currentPage.pageNum >= totalPages - 1) {
-    $pageLink.children[4].className = 'hidden';
-  } else {
-    $pageLink.children[4].className = '';
-  }
-
-  if (currentPage.pageNum <= 2) {
-    $pageLink.children[1].textContent = 1;
-    $pageLink.children[2].textContent = 2;
-    $pageLink.children[3].textContent = 3;
-    return;
-  }
-
-  if (currentPage.pageNum >= (totalPages - 3)) {
-    $pageLink.children[1].textContent = totalPages - 3;
-    $pageLink.children[2].textContent = totalPages - 2;
-    $pageLink.children[3].textContent = totalPages - 1;
-    return;
-  }
-
-  const link1 = parseInt($pageLink.children[1].textContent);
-  const link3 = parseInt($pageLink.children[3].textContent);
-
-  if (currentPage.pageNum >= (link3 - 1) ||
-  currentPage.pageNum <= (link1 - 1)) {
-    $pageLink.children[1].textContent = currentPage.pageNum;
-    $pageLink.children[2].textContent = currentPage.pageNum + 1;
-    $pageLink.children[3].textContent = currentPage.pageNum + 2;
+    $pageLinks.children[4].className = 'hidden';
   }
 }

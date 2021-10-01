@@ -24,7 +24,7 @@ card.
 
 ## Live Demo
 
-Try the application live at [https://angeljubilee.github.io/pokeDojo](https://angeljubilee.github.io/pokeDojo).
+Try the application live at [https://angeljubilee.github.io/pokemon-card-collector](https://angeljubilee.github.io/pokemon-card-collector).
 
 ## Features
 
