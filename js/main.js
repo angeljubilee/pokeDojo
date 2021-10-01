@@ -75,7 +75,7 @@ $search.addEventListener('keypress', event => {
 
 $addButton.addEventListener('click', event => {
   const cardIndex = $pokemonCard.getAttribute('data-view');
-  data.myDeck.items.push(pokemonCards.cards[cardIndex]);
+  data.myDeck.items.push(pokemonCards.items[cardIndex]);
   const numPerPage = data.myDeck.numPerPage;
   if (cardIndex < data.myDeck.pageNum * numPerPage + numPerPage) {
     createMyDeckCardDOM(cardIndex);
@@ -89,7 +89,10 @@ $backLink.addEventListener('click', event => {
 });
 
 $myDeckLink.addEventListener('click', event => {
+  currentPage.data = data.myDeck;
+  currentPage.$UL = $myDeck;
   currentPage.pageNum = 0;
+  updatePageLinks(currentPage);
   if (!data.myDeck.pageTotal) {
     createMyDeckDOM(0, data.myDeck.numPerPage);
     data.myDeck.pageTotal++;
@@ -183,7 +186,7 @@ function handleCardClick(event) {
     return;
   }
   const cardIndex = event.target.getAttribute('data-view');
-  const pokemonCard = pokemonCards.cards[cardIndex];
+  const pokemonCard = pokemonCards.items[cardIndex];
 
   $pokemonCard.setAttribute('src', pokemonCard.images.large);
   $pokemonCard.setAttribute('data-view', cardIndex);
@@ -205,6 +208,7 @@ function getPokemonCardSets() {
     currentPage.data = pokemonCardSets;
     currentPage.$UL = $logosUL;
     currentPage.pageNum = 0;
+    updatePageLinks(currentPage);
     pokemonCardSets.items.forEach(set => {
       cardSetNames.push(set.name.toLowerCase());
     });
@@ -235,6 +239,7 @@ function getPokemonCards(series) {
     currentPage.data = pokemonCards;
     currentPage.$UL = $cardsUL;
     currentPage.pageNum = 0;
+    updatePageLinks(currentPage);
     data.view = 'cards';
     $logo.getElementsByTagName('img')[0].setAttribute('src', seriesLogo);
     $logo.className = 'series-logo';
@@ -262,6 +267,7 @@ function getPokemonCardsByPokemon(name) {
     currentPage.data = pokemonCards;
     currentPage.$UL = $cardsUL;
     currentPage.pageNum = 0;
+    updatePageLinks(currentPage);
     showView('cards');
   });
   xhr.addEventListener('error', function () {
