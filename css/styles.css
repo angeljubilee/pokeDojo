@@ -40,6 +40,7 @@ h4 {
 a {
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
@@ -176,6 +177,10 @@ button {
   padding: 0.5rem;
 }
 
+.active {
+  color: #94c7e9;
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;
@@ -265,10 +270,6 @@ button {
 
 .padding-top-5 {
   padding-top: 5rem;
-}
-
-.active {
-  text-decoration: underline;
 }
 
 @media screen and (min-width: 768px) {

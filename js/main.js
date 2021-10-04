@@ -138,6 +138,10 @@ $pokemonCardCollector.addEventListener('click', event => {
 });
 
 $pageLinks.addEventListener('click', event => {
+  if (!event.target.matches('a')) {
+    return;
+  }
+
   const link = event.target.textContent;
   let nextPageNum;
   switch (link) {
@@ -150,6 +154,9 @@ $pageLinks.addEventListener('click', event => {
       break;
     case 'Next >':
       nextPageNum = currentPage.pageNum + 1;
+      break;
+    default:
+      nextPageNum = parseInt(link) - 1;
   }
 
   let start = currentPage.pageNum * currentPage.data.numPerPage;

@@ -57,6 +57,10 @@ function showPage(elementArray, start, end) {
 }
 
 function updatePageLinks(currentPage) {
+  if (!currentPage && currentPage !== 0) {
+    return;
+  }
+
   const totalPages = Math.ceil(currentPage.data.items.length /
     currentPage.data.numPerPage);
 
@@ -67,8 +71,48 @@ function updatePageLinks(currentPage) {
   }
 
   if (currentPage.pageNum >= totalPages - 1) {
-    $pageLinks.children[1].className = 'hidden';
+    $pageLinks.children[4].classList = 'hidden';
   } else {
-    $pageLinks.children[1].className = '';
+    $pageLinks.children[4].classList = '';
+  }
+
+  if (totalPages < 3) {
+    $pageLinks.children[1].className = 'hidden';
+    $pageLinks.children[2].className = 'hidden';
+    $pageLinks.children[3].className = 'hidden';
+    return;
+  }
+
+  if (currentPage.pageNum <= 2) {
+    $pageLinks.children[1].getElementsByTagName('a')[0].textContent = 1;
+    $pageLinks.children[2].getElementsByTagName('a')[0].textContent = 2;
+    $pageLinks.children[3].getElementsByTagName('a')[0].textContent = 3;
+  } else if (currentPage.pageNum >= (totalPages - 3)) {
+    $pageLinks.children[1].getElementsByTagName('a')[0].textContent = totalPages - 3;
+    $pageLinks.children[2].getElementsByTagName('a')[0].textContent = totalPages - 2;
+    $pageLinks.children[3].getElementsByTagName('a')[0].textContent = totalPages - 1;
+  } else {
+    const link1 = parseInt($pageLinks.children[1].textContent);
+    const link3 = parseInt($pageLinks.children[3].textContent);
+
+    if (currentPage.pageNum >= link3 || currentPage.pageNum <= link1) {
+      const $link1 = $pageLinks.children[1].getElementsByTagName('a')[0];
+      const $link2 = $pageLinks.children[2].getElementsByTagName('a')[0];
+      const $link3 = $pageLinks.children[3].getElementsByTagName('a')[0];
+
+      $link1.textContent = currentPage.pageNum;
+      $link2.textContent = currentPage.pageNum + 1;
+      $link3.textContent = currentPage.pageNum + 2;
+    }
+  }
+
+  for (let i = 1; i <= 3; i++) {
+    if ($pageLinks.children[i].getElementsByTagName('a')[0].textContent ===
+      (currentPage.pageNum + 1).toString()) {
+      $pageLinks.children[i].getElementsByTagName('a')[0].className = 'active';
+    } else {
+      $pageLinks.children[i].getElementsByTagName('a')[0].className = '';
+    }
+    $pageLinks.children[i].className = '';
   }
 }
