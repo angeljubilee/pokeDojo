@@ -241,7 +241,7 @@ function getPokemonCards(series) {
       showView('empty');
       return;
     }
-    pokemonCards.pageNum = 0;
+    pokemonCards.pageTotal = 0;
     createCardsDOM(0, pokemonCards.numPerPage);
     currentPage.data = pokemonCards;
     currentPage.$UL = $cardsUL;
@@ -269,6 +269,7 @@ function getPokemonCardsByPokemon(name) {
       showView('empty');
       return;
     }
+    pokemonCards.pageTotal = 0;
     createCardsDOM(0, pokemonCards.numPerPage);
     data.view = 'cards';
     currentPage.data = pokemonCards;

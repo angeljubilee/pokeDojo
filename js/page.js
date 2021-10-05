@@ -87,10 +87,10 @@ function updatePageLinks(currentPage) {
     $pageLinks.children[1].getElementsByTagName('a')[0].textContent = 1;
     $pageLinks.children[2].getElementsByTagName('a')[0].textContent = 2;
     $pageLinks.children[3].getElementsByTagName('a')[0].textContent = 3;
-  } else if (currentPage.pageNum >= (totalPages - 3)) {
-    $pageLinks.children[1].getElementsByTagName('a')[0].textContent = totalPages - 3;
-    $pageLinks.children[2].getElementsByTagName('a')[0].textContent = totalPages - 2;
-    $pageLinks.children[3].getElementsByTagName('a')[0].textContent = totalPages - 1;
+  } else if (currentPage.pageNum >= (totalPages - 2)) {
+    $pageLinks.children[1].getElementsByTagName('a')[0].textContent = totalPages - 2;
+    $pageLinks.children[2].getElementsByTagName('a')[0].textContent = totalPages - 1;
+    $pageLinks.children[3].getElementsByTagName('a')[0].textContent = totalPages;
   } else {
     const link1 = parseInt($pageLinks.children[1].textContent);
     const link3 = parseInt($pageLinks.children[3].textContent);
