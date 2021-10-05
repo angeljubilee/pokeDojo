@@ -95,7 +95,6 @@ $myDeckLink.addEventListener('click', event => {
   updatePageLinks(currentPage);
   if (!data.myDeck.pageTotal) {
     createMyDeckDOM(0, data.myDeck.numPerPage);
-    data.myDeck.pageTotal++;
   } else {
     showPage($myDeck.children, 0, data.myDeck.numPerPage);
   }
@@ -134,6 +133,19 @@ $removeCard.addEventListener('click', event => {
 });
 
 $pokemonCardCollector.addEventListener('click', event => {
+  if (currentPage.data === pokemonCardSets) {
+    const start = currentPage.pageNum * currentPage.data.numPerPage;
+    hidePage(currentPage.$UL.children, start,
+      start + currentPage.data.numPerPage);
+  } else {
+    hidePage($logosUL.children, 0,
+      pokemonCardSets.pageTotal * pokemonCardSets.numPerPage);
+  }
+  currentPage.data = pokemonCardSets;
+  currentPage.$UL = $logosUL;
+  currentPage.pageNum = 0;
+  showPage(currentPage.$UL.children, 0, currentPage.data.numPerPage);
+  updatePageLinks(currentPage);
   showView('logos');
 });
 
@@ -170,16 +182,18 @@ $pageLinks.addEventListener('click', event => {
     return;
   }
 
-  start = nextPageNum * currentPage.data.numPerPage;
-  if (data.view === 'logos') {
-    createLogosDOM(start, start + pokemonCardSets.numPerPage);
-    pokemonCardSets.pageTotal++;
-  } else if (data.view === 'cards') {
-    createCardsDOM(start, start + pokemonCards.numPerPage);
-    pokemonCards.pageTotal++;
-  } else if (data.view === 'myDeck') {
-    createMyDeckDOM(start, start + data.myDeck.numPerPage);
-    data.myDeck.pageTotal++;
+  for (let i = currentPage.data.pageTotal; i <= nextPageNum; i++) {
+    start = i * currentPage.data.numPerPage;
+    if (data.view === 'logos') {
+      createLogosDOM(start, start + pokemonCardSets.numPerPage);
+    } else if (data.view === 'cards') {
+      createCardsDOM(start, start + pokemonCards.numPerPage);
+    } else if (data.view === 'myDeck') {
+      createMyDeckDOM(start, start + data.myDeck.numPerPage);
+    }
+    if (i < nextPageNum) {
+      hidePage(currentPage.$UL.children, start, start + currentPage.data.numPerPage);
+    }
   }
 
   currentPage.pageNum = nextPageNum;
@@ -323,6 +337,7 @@ function createLogosDOM(start, end) {
     $logosUL.appendChild($li);
     data.view = 'logos';
   }
+  pokemonCardSets.pageTotal++;
 }
 
 function createCardsDOM(start, end) {
@@ -350,6 +365,7 @@ function createCardsDOM(start, end) {
     $cards.replaceChild($ul, $cardsUL);
     $cardsUL = $ul;
   }
+  pokemonCards.pageTotal++;
 }
 
 function createMyDeckDOM(start, end) {
@@ -368,6 +384,8 @@ function createMyDeckDOM(start, end) {
     $li.appendChild($img);
     $myDeck.appendChild($li);
   }
+
+  data.myDeck.pageTotal++;
 
   data.view = 'myDeck';
   $main.className = 'main-header';
